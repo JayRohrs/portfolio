@@ -83,7 +83,8 @@
       "videos": [
         {
           "title": "Cato Falls live at Manitowoc Breakwater Lighthouse — Official Video",
-          "url": "https://youtu.be/M_MTtqQEu-4"
+          "url": "https://youtu.be/M_MTtqQEu-4",
+          "published": "2012"
         }
       ],
       "needs_jay": "'Night Hike — Inside the Silo' link still missing.",
@@ -106,11 +107,13 @@
       "videos": [
         {
           "url": "https://youtube.com/shorts/qgA4NBjJo5A",
-          "title": "Ride in Unity (Denver, 2026) — filmed and posted live as a YouTube Short"
+          "title": "Ride in Unity (Denver, 2026) — filmed and posted live as a YouTube Short",
+          "published": "2026"
         },
         {
           "url": "https://youtu.be/XTkXygRwwBA",
-          "title": "Sheboygan Mayoral Debate 2012"
+          "title": "Sheboygan Mayoral Debate 2012",
+          "published": "2012"
         }
       ],
       "needs_jay": null,
@@ -192,7 +195,8 @@
       "url": "https://youtu.be/UveMoL-S75Q",
       "tags": [
         "Music"
-      ]
+      ],
+      "published": "2011"
     },
     {
       "title": "Epidemia — U.S.–Mexico documentary (2009)",
