@@ -83,7 +83,8 @@
       "videos": [
         {
           "title": "Cato Falls live at Manitowoc Breakwater Lighthouse — Official Video",
-          "url": "https://youtu.be/M_MTtqQEu-4"
+          "url": "https://youtu.be/M_MTtqQEu-4",
+          "published": "2012"
         },
         {
           "title": "Night Hike — Inside the Silo",
@@ -110,11 +111,13 @@
       "videos": [
         {
           "url": "https://youtube.com/shorts/qgA4NBjJo5A",
-          "title": "Ride in Unity (Denver, 2026) — filmed and posted live as a YouTube Short"
+          "title": "Ride in Unity (Denver, 2026) — filmed and posted live as a YouTube Short",
+          "published": "2026"
         },
         {
           "url": "https://youtu.be/XTkXygRwwBA",
-          "title": "Sheboygan Mayoral Debate 2012"
+          "title": "Sheboygan Mayoral Debate 2012",
+          "published": "2012"
         }
       ],
       "needs_jay": null,
@@ -196,7 +199,8 @@
       "url": "https://youtu.be/UveMoL-S75Q",
       "tags": [
         "Music"
-      ]
+      ],
+      "published": "2011"
     },
     {
       "title": "Epidemia — U.S.–Mexico documentary (2009)",
@@ -260,8 +264,47 @@
     "Archive"
   ],
   "about": {
-    "paragraphs": [],
-    "timeline": [],
-    "needs_jay": "No biography paragraphs or timeline were supplied. Add them here and the About page and Home preview will show them."
+    "paragraphs": [
+      "I'm a multimedia producer and livestream technician in Denver. For more than 20 years I've made documentary, public-affairs, music and event video, from the field camera to the edit and the final delivery.",
+      "Today I run multi-camera hybrid services and events for a Denver congregation. I also come from the technical side, with years of Microsoft 365 and business-systems support behind reliable live production. I like work where the story and the technology both have to hold up."
+    ],
+    "timeline": [
+      {
+        "year": "Mid-2000s on",
+        "text": "Independent video producer (J Cliche); online video publishing begins."
+      },
+      {
+        "year": "2004–2005",
+        "text": "Volunteer camera operator and floor manager, TVSB Community Access Television, Santa Barbara."
+      },
+      {
+        "year": "2007–2008",
+        "text": "Genius Admin, Apple Fifth Avenue."
+      },
+      {
+        "year": "2008–2009",
+        "text": "Live ESPN360 stream monitoring, The FeedRoom, New York / New Jersey."
+      },
+      {
+        "year": "2009",
+        "text": "Co-produced the five-episode Epidemia documentary."
+      },
+      {
+        "year": "Art of War",
+        "text": "Produced, directed and edited the paid 20-episode documentary series."
+      },
+      {
+        "year": "2018–2025",
+        "text": "Operations and systems specialist, On Call Restaurant Accounting."
+      },
+      {
+        "year": "2019",
+        "text": "B.S. in Technical Communication, Metropolitan State University of Denver."
+      },
+      {
+        "year": "2025–present",
+        "text": "Volunteer AV and livestream support, First Unitarian Society of Denver."
+      }
+    ]
   }
 }

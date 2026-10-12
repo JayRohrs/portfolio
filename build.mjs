@@ -58,7 +58,7 @@ function video(v, rootPrefix) {
     <span class="video-frame">${img}<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span>
     <span class="video-cta">Play video<span class="sr">: ${esc(v.title)}</span></span>
   </a>
-  <figcaption>${esc(v.title)}</figcaption>
+  <figcaption>${esc(v.title)}${v.published ? ` (${esc(v.published)})` : ""}</figcaption>
 </figure>`;
 }
 
