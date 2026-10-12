@@ -65,7 +65,7 @@ function video(v, rootPrefix) {
 function featuredCard(p, rootPrefix, tags = false) {
   const tagAttr = tags ? ` data-tags="${esc(p.tags.map(slug).join(" "))}"` : "";
   return `<article class="card"${tagAttr}>
-  <a class="card-media" href="${rootPrefix}projects/${p.id}.html" tabindex="-1" aria-hidden="true">${thumbMarkup(p, rootPrefix)}</a>
+  <a class="card-media video-frame" href="${rootPrefix}projects/${p.id}.html" tabindex="-1" aria-hidden="true">${thumbMarkup(p, rootPrefix)}</a>
   <div class="card-body">
     <p class="eyebrow">${esc(p.type)}</p>
     <h3><a href="${rootPrefix}projects/${p.id}.html">${esc(p.title)}</a></h3>
@@ -91,7 +91,7 @@ function proofCard(p, tags = false) {
 }
 
 function head({ title, description, rootPrefix }) {
-  return `<!doctype html>
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -236,7 +236,7 @@ ${proof.map((p) => proofCard(p)).join("\n")}
 
 <section class="section" id="about">
   <div class="wrap about-grid">
-    <img class="headshot" src="${r}assets/images/headshot.jpg" alt="Portrait of ${esc(person.name)}" width="720" height="900" loading="lazy" decoding="async">
+    <img class="headshot" src="${r}assets/images/headshot.jpg" alt="Portrait of ${esc(person.name)}" width="720" height="900" decoding="async">
     <div>
       <h2>About</h2>
       <p class="lede">${esc(person.statement)}</p>
@@ -448,7 +448,7 @@ for (const d of ["projects"]) {
 for (const { file, html } of pages) {
   const out = join(ROOT, file);
   mkdirSync(dirname(out), { recursive: true });
-  writeFileSync(out, html);
+  writeFileSync(out, html.replace(/[ \t]+$/gm, ""));
 }
 
 // ---- TODO.md for Jay --------------------------------------------------------

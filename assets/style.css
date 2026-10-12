@@ -126,7 +126,7 @@ nav { order: 3; width: 100%; }
 /* Cards */
 .grid { display: grid; gap: 1.75rem; grid-template-columns: 1fr; }
 .card { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.card-media { display: block; }
+.card-media { border-radius: 0; }
 .card-body { padding: 1.25rem 1.25rem .5rem; display: flex; flex-direction: column; flex: 1; }
 .card h3 a { color: var(--plum-deep); text-decoration: none; }
 .card h3 a:hover { text-decoration: underline; }
