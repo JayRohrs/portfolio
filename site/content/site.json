@@ -1,0 +1,216 @@
+{
+  "status": "APPROVED_BY_JAY_2026-10-12 (all content and related links)",
+  "prepared": "2026-10-12",
+  "sources": [
+    "project-context/INFORMATION_ARCHITECTURE.md (homepage and portfolio design)",
+    "project-context/VIDEO_LINKS.md (only Verified/Confirmed public links used)",
+    "project-context/DECISIONS.md 2026-07-17 (featured groups)",
+    "resumes/public-downloads (already-public resume versions)"
+  ],
+  "excluded_on_purpose": [
+    "The First Unitarian memorial livestream link (never public: permission denied)",
+    "Gothamist, Gawker or CBS for Wall Street Pillow Fight (unverified; NBC New York is confirmed)",
+    "Drone and Hawaii clips (no links yet; family permission needed for the swimmer shot)",
+    "Phone number (contact by email/LinkedIn only on the public site)",
+    "Private career, client, church-governance and OCRA material"
+  ],
+  "person": {
+    "name": "Jay Rohrs",
+    "headline": "Multimedia Producer · Livestream Technician · Documentary Storyteller · Technical Systems Problem Solver",
+    "statement": "I create clear, reliable media—from field production and editing to multi-camera live events and the technical systems behind them.",
+    "location": "Denver, Colorado",
+    "availability": "Available in Denver and for remote, hybrid, contract or full-time work",
+    "email": "jayrohrs@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/jay-rohrs",
+    "youtube": "https://www.youtube.com/@JCliche/videos",
+    "headshot": "PROVIDED_BY_JAY_AT_UPLOAD (master headshot; used only in the About section)"
+  },
+  "credibility_strip": [
+    {
+      "figure": "20+ Years",
+      "label": "Media and technical production"
+    },
+    {
+      "figure": "1.6M+ Views",
+      "label": "On one published performance video"
+    },
+    {
+      "figure": "20 Episodes",
+      "label": "The Art of War documentary series"
+    },
+    {
+      "figure": "Live Broadcast QC",
+      "label": "ESPN360 live-stream monitoring"
+    },
+    {
+      "figure": "NBC New York",
+      "label": "Featured my footage (Wall Street Pillow Fight, 2009)"
+    }
+  ],
+  "featured": [
+    {
+      "id": "art-of-war",
+      "title": "The Art of War",
+      "type": "Serialized documentary and transmedia production",
+      "role": "Concept (podcast-style documentary) · Producer · Director · Camera · Editor",
+      "why": "A paid, year-plus, 20-episode documentary series with writer Kelly Roman and artist Michael DeWeese, following the creation of The Art of War graphic novel; acknowledged in the published book. Also filmed Kelly Roman's own panel at New York Comic Con.",
+      "videos": [
+        {
+          "title": "Introducing Michael DeWeese",
+          "url": "https://youtu.be/W0aLdycp7ug"
+        },
+        {
+          "title": "Overview of Mike's Process",
+          "url": "https://youtu.be/28LTwa-Nldc"
+        },
+        {
+          "title": "Storyboarding Traverse Flies",
+          "url": "https://youtu.be/K1eLNMcTljc"
+        }
+      ],
+      "needs_jay": "Comic Con year: Jay recalls about 2010 (unconfirmed) — no year shown until confirmed."
+    },
+    {
+      "id": "cato-falls",
+      "title": "Cato Falls",
+      "type": "Community music and documentary storytelling",
+      "role": "Hired videographer · Concept · Direction · Camera · Lighting · Sound · Editor",
+      "why": "Hired to make a series of live music videos for the band; the Manitowoc Breakwater Lighthouse performance was Jay's concept, made with the band's Hope Lindenman.",
+      "videos": [
+        {
+          "title": "Cato Falls live at Manitowoc Breakwater Lighthouse — Official Video",
+          "url": "https://youtu.be/M_MTtqQEu-4"
+        }
+      ],
+      "needs_jay": "'Night Hike — Inside the Silo' link still missing.",
+      "team": [
+        "Jay Rohrs — concept, direction, camera, lighting, sound, editing",
+        "Ellyn Scott — production assistant"
+      ]
+    },
+    {
+      "id": "documentary-journalism",
+      "title": "Documentary & Community Journalism",
+      "type": "Documentary, civic and public-affairs coverage",
+      "role": "Producer · Camera · Editor",
+      "why": "From New York street events to current Denver civic coverage, observational documentation over two decades.",
+      "videos": [
+        {
+          "url": "https://youtube.com/shorts/qgA4NBjJo5A",
+          "title": "Ride in Unity (Denver, 2026) — filmed and posted live as a YouTube Short"
+        },
+        {
+          "url": "https://youtu.be/XTkXygRwwBA",
+          "title": "Sheboygan Mayoral Debate 2012"
+        }
+      ],
+      "needs_jay": null,
+      "pending_item": {
+        "title": "Wall Street Pillow Fight (New York, April 4, 2009)",
+        "verified_event_facts": "More than 1,000 people took part; one arrest; covered by NBC New York / AP (https://www.nbcnewyork.com/news/local/one-arrest-at-the-wall-street-pillow-fight/1890796/).",
+        "media_pickup": "Jay's arrest footage was featured by NBC New York (article April 5, 2009, verified online; footage Jay-confirmed 2026-10-12; the article's video embed no longer plays).",
+        "public_wording": "My footage of the arrest was featured by NBC New York.",
+        "status": "Jay's own video link still to recover (YouTube channel or original iMovie project on D:\\JayBase-Media-Recovery). Gothamist/Gawker/CBS remain unverified and unnamed."
+      }
+    },
+    {
+      "id": "music-performance",
+      "title": "Music & Performance",
+      "type": "Live music and performance documentation",
+      "role": "Camera · Editor",
+      "why": "Repeat collaborations with regional and touring musicians, including paid concert documentation at Paradigm Coffee & Music.",
+      "videos": [
+        {
+          "title": "Christopher Paul Stelling — Morning Train to Memphis",
+          "url": "https://youtu.be/qFzKtzFOpE8"
+        },
+        {
+          "title": "Cedarwell @ Paradigm — Who to Blame",
+          "url": "https://youtu.be/OTY6tzkKOB0"
+        }
+      ]
+    },
+    {
+      "id": "drone",
+      "title": "Drone Collections",
+      "type": "Practical aerial filming",
+      "role": "Aerial camera",
+      "why": "Denver city and weather footage and Hawaii landscape and tracking shots.",
+      "videos": [],
+      "needs_jay": "No public links yet. Hide this card until Jay picks clips. No FAA/commercial certification claim."
+    },
+    {
+      "id": "culture-cafe",
+      "title": "Culture Café Commercial",
+      "type": "Paid commercial for streaming",
+      "role": "Concept · Script · Casting · Direction · Lighting · Camera · Sound · Editor",
+      "why": "Everything but the song was Jay's work: the artist wrote and performed it live; Jay conceived, lit, filmed, recorded and edited the commercial.",
+      "videos": [
+        {
+          "title": "Culture Café Jingle / Commercial",
+          "url": "https://youtu.be/pc7XmDuR-pY"
+        }
+      ],
+      "needs_jay": null,
+      "team": [
+        "Jay Rohrs — concept, direction, camera, lighting, sound, editing",
+        "Ellyn Scott — production assistant"
+      ]
+    }
+  ],
+  "additional_proof": [
+    {
+      "title": "Belly Dance with Sadie",
+      "role": "Videographer; filmed and published",
+      "why": "A performance video that has passed 1.6 million views — long-tail audience reach.",
+      "url": "https://youtu.be/UveMoL-S75Q"
+    },
+    {
+      "title": "Epidemia — U.S.–Mexico documentary (2009)",
+      "role": "Co-producer; New York interviews, B-roll, rough edits and YouTube publishing (final edits by Mexico-based collaborators)",
+      "why": "A five-episode bilingual documentary produced across two countries.",
+      "url": "https://www.youtube.com/@swinefluh1d1"
+    }
+  ],
+  "capabilities": [
+    {
+      "name": "Story & Editorial",
+      "evidence": "Documentary, public-affairs and music storytelling across 20+ years."
+    },
+    {
+      "name": "Camera & Field Production",
+      "evidence": "Field camera and audio, DSLR, PTZ and multi-camera coverage, aerial footage."
+    },
+    {
+      "name": "Live Production & Broadcast",
+      "evidence": "Live ESPN360 stream QC; multi-camera hybrid events with Wirecast, ProPresenter and Zoom."
+    },
+    {
+      "name": "Editing, Audio & Delivery",
+      "evidence": "Premiere Pro and Final Cut Pro editing, field audio, publishing since the mid-2000s."
+    },
+    {
+      "name": "Systems, Workflow & Troubleshooting",
+      "evidence": "Years of Microsoft 365 and business-systems support behind reliable live production."
+    }
+  ],
+  "current_practice": [
+    "Livestream and hybrid-event production for a Denver congregation, 2025–present",
+    "Community and civic video coverage, 2026"
+  ],
+  "resumes": [
+    {
+      "label": "AV & Media Résumé",
+      "file": "Jay_Rohrs_AV_Resume_V5.8_Public_Photo_Edition.pdf",
+      "note": "Current public version; will be replaced when the new AV master is approved."
+    },
+    {
+      "label": "Operations & Systems Résumé",
+      "file": "Jay_Rohrs_IT_Resume_V4.6_Public_Final.pdf",
+      "note": "Current public version; will be replaced when the new IT master is approved."
+    }
+  ],
+  "contact_cta": "Need someone who can tell the story and keep the system working?",
+  "credits_note": "Production assistant on Cato Falls and Culture Café: Ellyn Scott (approved for public credit by Jay, 2026-10-12). Show as a small \"Team\" credit line on those case studies.",
+  "youtube_owner_check": "Jay's videos are on the YouTube account tied to jaycliche@gmail.com (channel @JCliche). NBC New York claim stands as Jay-confirmed; a YouTube Studio read of the original upload can add proof later."
+}
