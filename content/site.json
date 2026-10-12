@@ -68,7 +68,11 @@
           "url": "https://youtu.be/K1eLNMcTljc"
         }
       ],
-      "needs_jay": "Comic Con year: Jay recalls about 2010 (unconfirmed) — no year shown until confirmed."
+      "needs_jay": "Comic Con year: Jay recalls about 2010 (unconfirmed) — no year shown until confirmed.",
+      "tags": [
+        "Featured",
+        "Documentary"
+      ]
     },
     {
       "id": "cato-falls",
@@ -86,6 +90,11 @@
       "team": [
         "Jay Rohrs — concept, direction, camera, lighting, sound, editing",
         "Ellyn Scott — production assistant"
+      ],
+      "tags": [
+        "Featured",
+        "Music",
+        "Documentary"
       ]
     },
     {
@@ -111,7 +120,12 @@
         "media_pickup": "Jay's arrest footage was featured by NBC New York (article April 5, 2009, verified online; footage Jay-confirmed 2026-10-12; the article's video embed no longer plays).",
         "public_wording": "My footage of the arrest was featured by NBC New York.",
         "status": "Jay's own video link still to recover (YouTube channel or original iMovie project on D:\\JayBase-Media-Recovery). Gothamist/Gawker/CBS remain unverified and unnamed."
-      }
+      },
+      "tags": [
+        "Featured",
+        "Documentary",
+        "Archive"
+      ]
     },
     {
       "id": "music-performance",
@@ -128,6 +142,10 @@
           "title": "Cedarwell @ Paradigm — Who to Blame",
           "url": "https://youtu.be/OTY6tzkKOB0"
         }
+      ],
+      "tags": [
+        "Featured",
+        "Music"
       ]
     },
     {
@@ -137,7 +155,11 @@
       "role": "Aerial camera",
       "why": "Denver city and weather footage and Hawaii landscape and tracking shots.",
       "videos": [],
-      "needs_jay": "No public links yet. Hide this card until Jay picks clips. No FAA/commercial certification claim."
+      "needs_jay": "No public links yet. Hide this card until Jay picks clips. No FAA/commercial certification claim.",
+      "tags": [
+        "Featured",
+        "Aerial"
+      ]
     },
     {
       "id": "culture-cafe",
@@ -155,6 +177,10 @@
       "team": [
         "Jay Rohrs — concept, direction, camera, lighting, sound, editing",
         "Ellyn Scott — production assistant"
+      ],
+      "tags": [
+        "Featured",
+        "Commercial"
       ]
     }
   ],
@@ -163,13 +189,20 @@
       "title": "Belly Dance with Sadie",
       "role": "Videographer; filmed and published",
       "why": "A performance video that has passed 1.6 million views — long-tail audience reach.",
-      "url": "https://youtu.be/UveMoL-S75Q"
+      "url": "https://youtu.be/UveMoL-S75Q",
+      "tags": [
+        "Music"
+      ]
     },
     {
       "title": "Epidemia — U.S.–Mexico documentary (2009)",
       "role": "Co-producer; New York interviews, B-roll, rough edits and YouTube publishing (final edits by Mexico-based collaborators)",
       "why": "A five-episode bilingual documentary produced across two countries.",
-      "url": "https://www.youtube.com/@swinefluh1d1"
+      "url": "https://www.youtube.com/@swinefluh1d1",
+      "tags": [
+        "Documentary",
+        "Archive"
+      ]
     }
   ],
   "capabilities": [
@@ -212,5 +245,19 @@
   ],
   "contact_cta": "Need someone who can tell the story and keep the system working?",
   "credits_note": "Production assistant on Cato Falls and Culture Café: Ellyn Scott (approved for public credit by Jay, 2026-10-12). Show as a small \"Team\" credit line on those case studies.",
-  "youtube_owner_check": "Jay's videos are on the YouTube account tied to jaycliche@gmail.com (channel @JCliche). NBC New York claim stands as Jay-confirmed; a YouTube Studio read of the original upload can add proof later."
+  "youtube_owner_check": "Jay's videos are on the YouTube account tied to jaycliche@gmail.com (channel @JCliche). NBC New York claim stands as Jay-confirmed; a YouTube Studio read of the original upload can add proof later.",
+  "work_filters": [
+    "Featured",
+    "Documentary",
+    "Live Production",
+    "Music",
+    "Commercial",
+    "Aerial",
+    "Archive"
+  ],
+  "about": {
+    "paragraphs": [],
+    "timeline": [],
+    "needs_jay": "No biography paragraphs or timeline were supplied. Add them here and the About page and Home preview will show them."
+  }
 }
