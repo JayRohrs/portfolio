@@ -23,7 +23,9 @@
     "email": "jayrohrs@gmail.com",
     "linkedin": "https://www.linkedin.com/in/jay-rohrs",
     "youtube": "https://www.youtube.com/@JCliche/videos",
-    "headshot": "PROVIDED_BY_JAY_AT_UPLOAD (master headshot; used only in the About section)"
+    "headshot": "PROVIDED_BY_JAY_AT_UPLOAD (master headshot; used only in the About section)",
+    "service_area": "[NEEDS JAY: service area wording]",
+    "phone": "[NEEDS JAY: show a phone number? Currently NO]"
   },
   "credibility_strip": [
     {
@@ -243,12 +245,14 @@
     {
       "label": "AV & Media Résumé",
       "file": "Jay_Rohrs_AV_Resume_V5.8_Public_Photo_Edition.pdf",
-      "note": "Current public version; will be replaced when the new AV master is approved."
+      "note": "Current public version; will be replaced when the new AV master is approved.",
+      "track": "av"
     },
     {
       "label": "Operations & Systems Résumé",
       "file": "Jay_Rohrs_IT_Resume_V4.6_Public_Final.pdf",
-      "note": "Current public version; will be replaced when the new IT master is approved."
+      "note": "Current public version; will be replaced when the new IT master is approved.",
+      "track": "it"
     }
   ],
   "contact_cta": "Need someone who can tell the story and keep the system working?",
@@ -306,5 +310,195 @@
         "text": "Volunteer AV and livestream support, First Unitarian Society of Denver."
       }
     ]
+  },
+  "site_url": "",
+  "client": {
+    "home": {
+      "hero_line": "Technology that keeps working, and video that tells your story.",
+      "intro_heading": "What I can do for you",
+      "intro": "I help small businesses, churches, nonprofits and community organisations with two kinds of work: the technology that keeps an office running, and the audio and video that gets a message out. They are separate services, so pick the one you need. Or start with a conversation and I will point you the right way.",
+      "ai_heading": "Where the two meet: AI and automation",
+      "ai_text": "Both tracks reward the same habits: spot the work that repeats, check it carefully, and keep a person in charge. If that sounds useful, there is a short page about it.",
+      "proof_heading": "Work you can watch",
+      "proof_intro": "Videos from the AV and media track. Open a case study to see what I did and why it mattered."
+    },
+    "how_it_works": [
+      {
+        "step": "Talk",
+        "text": "We have a short conversation about what you need and what is getting in the way."
+      },
+      {
+        "step": "A small first step",
+        "text": "We agree one small, clearly scoped piece of work to start with, so you can see how it goes."
+      },
+      {
+        "step": "Deliver",
+        "text": "I do the work and explain it in plain words."
+      },
+      {
+        "step": "Follow up",
+        "text": "I check back, fix what needs fixing, and we decide together what comes next."
+      }
+    ],
+    "pricing": "Quote on request",
+    "first_step_title": "A first conversation, then a small first step",
+    "services": [
+      {
+        "id": "it",
+        "path": "services/it.html",
+        "track": "IT & Systems",
+        "title": "IT & Systems for small business",
+        "description": "Microsoft 365, email security, everyday tech support and routine automation checks for small businesses, offices, nonprofits and restaurant groups, from Jay Rohrs in Denver.",
+        "tagline": "Microsoft 365, everyday support and practical automation, explained in plain words.",
+        "who_for": "Small businesses, offices, nonprofits, and restaurant or accounting groups that do not have an in-house IT person, or whose IT person is stretched thin. I spent years as the main IT and systems resource for a restaurant-accounting firm, so I am used to explaining technical problems to people who just want their work to go smoothly.",
+        "types": [
+          {
+            "name": "Microsoft 365 setup and administration",
+            "text": "User accounts, licences, permissions, Teams and SharePoint spaces, and the sign-in and access rules behind them."
+          },
+          {
+            "name": "Email and sign-in security",
+            "text": "Multi-factor sign-in rolled out across a team, and mail problems such as phishing and spam traced and sorted out."
+          },
+          {
+            "name": "Everyday support and equipment",
+            "text": "Remote help for people on Windows, Mac, iPhone and Android; choosing and setting up computers, printers and other office equipment; getting new people started and removing access when someone leaves; and small-office networks, domains and email hosting."
+          },
+          {
+            "name": "Restaurant and accounting-system checks",
+            "text": "Running and reviewing routine automation checks in restaurant accounting software such as Restaurant365, and working with a programmer when something needs correcting."
+          },
+          {
+            "name": "Documentation and handover",
+            "text": "Plain, step-by-step write-ups of how your systems work, and training so the next person can pick them up."
+          }
+        ],
+        "first_step": "Tell me what is slowing you down. We talk it through, and if it is a fit we pick one small job to start with, such as a tidy-up of user accounts, a sign-in security check, or a written guide to a system only one person understands.",
+        "proof": [
+          {
+            "label": "Operations & Systems Résumé (PDF)",
+            "file": "Jay_Rohrs_IT_Resume_V4.6_Public_Final.pdf"
+          }
+        ],
+        "other_track": "av"
+      },
+      {
+        "id": "av",
+        "path": "services/av.html",
+        "track": "AV & Production",
+        "title": "AV & Media Production",
+        "description": "Livestreams, multi-camera hybrid events, field production, editing and documentary storytelling for churches, nonprofits and businesses, from Jay Rohrs in Denver.",
+        "tagline": "Livestreams, live events and video that tells a clear story.",
+        "who_for": "Churches, nonprofits, community groups and businesses that want an event streamed well, a story told on camera, or a video finished and published. I currently run livestreams and hybrid services for a Denver congregation, and I have made documentary, music and commercial video for more than twenty years.",
+        "types": [
+          {
+            "name": "Livestreams and hybrid events",
+            "text": "Multi-camera coverage for people in the room and people online: camera switching, graphics, remote participants and quick fixes when something goes wrong, using tools such as Wirecast, ProPresenter and Zoom."
+          },
+          {
+            "name": "Church and community AV",
+            "text": "Services and community events with PTZ cameras, sound and displays working together, plus written notes and debriefs so the setup keeps getting smoother."
+          },
+          {
+            "name": "Field production and documentary",
+            "text": "Camera and audio on location, interviews, and stories told over time, from a single shoot to a 20-episode series."
+          },
+          {
+            "name": "Editing and delivery",
+            "text": "Editing in Premiere Pro or Final Cut Pro, and publishing to YouTube."
+          },
+          {
+            "name": "Music, performance and short commercials",
+            "text": "Live performance video and short commercials, from concept and casting through lighting, filming and editing."
+          }
+        ],
+        "first_step": "Tell me about the event or the story. We talk it through, and if it is a fit we pick one small job to start with, such as livestreaming a single event or editing one short video.",
+        "proof": [
+          {
+            "label": "Culture Café Commercial",
+            "project": "culture-cafe"
+          },
+          {
+            "label": "Music & Performance",
+            "project": "music-performance"
+          }
+        ],
+        "other_track": "it"
+      },
+      {
+        "id": "ai",
+        "path": "services/ai.html",
+        "track": "AI & Automation",
+        "title": "AI where they meet",
+        "description": "How AI-assisted work, routine automation checks and clear documentation connect IT and media production, from Jay Rohrs in Denver.",
+        "tagline": "Where technology work and media work meet.",
+        "who_for": "Organisations that already use, or are thinking about using, IT support and media production, and want them to work together instead of in separate corners. This is a short conversation page, not a separate product: it sits on top of the two tracks.",
+        "types": [
+          {
+            "name": "AI as an assistant, with a person in charge",
+            "text": "I use AI-assisted research and ideas, with human editorial judgment throughout."
+          },
+          {
+            "name": "Routine checks that run on their own",
+            "text": "I have run automation checks in restaurant accounting software and worked with a programmer when a check needed review. The same careful habit applies to other repeating work."
+          },
+          {
+            "name": "How-to material that is written and produced",
+            "text": "My degree is in technical communication, and I have written reusable step-by-step documentation. I can also film and edit it, so a guide can be both a document and a short video."
+          }
+        ],
+        "ideas_heading": "Ideas worth a first conversation",
+        "ideas_intro": "These are examples of what the two tracks could do together. They are starting points for talking, not a catalogue.",
+        "ideas": [
+          "Video archives that are captioned and searchable.",
+          "Reports that keep an eye on business data and tell you when something looks off.",
+          "Training and how-to material that exists as both a written guide and a short video."
+        ],
+        "first_step": "Tell me what repeats in your week, or what is sitting unused in a drawer or on a drive. We talk it through, and if it is a fit we pick one small thing to try.",
+        "proof": [
+          {
+            "label": "The Art of War",
+            "project": "art-of-war"
+          }
+        ],
+        "other_track": null
+      }
+    ],
+    "start": {
+      "title": "Start a project",
+      "description": "Tell Jay Rohrs what you need: IT and systems help, AV and media production, or both. Your email program opens with the request filled in.",
+      "intro": "Tell me a little about what you need. When you press the button, your own email program opens with your request filled in. Nothing is sent until you press Send there.",
+      "tracks": [
+        {
+          "value": "it",
+          "label": "IT & Systems"
+        },
+        {
+          "value": "av",
+          "label": "AV & Media Production"
+        },
+        {
+          "value": "both",
+          "label": "Both"
+        },
+        {
+          "value": "not-sure",
+          "label": "Not sure yet"
+        }
+      ],
+      "timelines": [
+        "As soon as possible",
+        "Within a month",
+        "In the next few months",
+        "No fixed date"
+      ],
+      "budgets": [
+        "Under $1,000",
+        "$1,000 to $5,000",
+        "$5,000 to $15,000",
+        "More than $15,000",
+        "Not sure yet"
+      ]
+    }
   }
 }
