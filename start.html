@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Start a project — Jay Rohrs</title>
+<meta name="description" content="Tell Jay Rohrs what you need: IT and systems help, AV and media production, or both. Your email program opens with the request filled in.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jay Rohrs">
+<meta property="og:title" content="Start a project — Jay Rohrs">
+<meta property="og:description" content="Tell Jay Rohrs what you need: IT and systems help, AV and media production, or both. Your email program opens with the request filled in.">
+<meta name="twitter:card" content="summary">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#2a1220">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="site-header">
+  <div class="wrap header-row">
+    <a class="wordmark" href="index.html">Jay Rohrs</a>
+    <nav aria-label="Main">
+      <ul class="nav">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resume.html">Résumés</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-primary header-cta" href="start.html" aria-current="page">Start a project</a>
+  </div>
+  <div class="rule" aria-hidden="true"></div>
+</header>
+<main id="main">
+
+<section class="page-head">
+  <div class="wrap narrow">
+    <h1>Start a project</h1>
+    <p class="lede">Tell me a little about what you need. When you press the button, your own email program opens with your request filled in. Nothing is sent until you press Send there.</p>
+    <p>You can also email <a href="mailto:jayrohrs@gmail.com">jayrohrs@gmail.com</a> directly.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap narrow">
+    <p id="no-js-note" class="notice">This form needs JavaScript to build your email. Without it, please write to <a href="mailto:jayrohrs@gmail.com">jayrohrs@gmail.com</a> and tell me which kind of help you need (IT &amp; Systems, AV &amp; Media Production, both, or not sure), what you need, and your timeline.</p>
+    <form id="start-form" class="form" data-to="jayrohrs@gmail.com" novalidate hidden>
+      <div id="form-errors" class="form-errors" role="alert" tabindex="-1" hidden></div>
+      <div class="field">
+        <label for="f-name">Your name <span class="req">(required)</span></label>
+        <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="err-name">
+        <p class="field-error" id="err-name" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-organisation">Organisation</label>
+        <input id="f-organisation" name="organisation" type="text" autocomplete="organization">
+      </div>
+      <div class="field">
+        <label for="f-email">Your email <span class="req">(required)</span></label>
+        <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="err-email">
+        <p class="field-error" id="err-email" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-phone">Phone <span class="opt">(optional)</span></label>
+        <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+      </div>
+      <fieldset class="field" aria-describedby="err-track">
+        <legend>What kind of help? <span class="req">(required)</span></legend>
+        <div class="choice"><input id="track-it" type="radio" name="track" value="it"><label for="track-it">IT &amp; Systems</label></div>
+        <div class="choice"><input id="track-av" type="radio" name="track" value="av"><label for="track-av">AV &amp; Media Production</label></div>
+        <div class="choice"><input id="track-both" type="radio" name="track" value="both"><label for="track-both">Both</label></div>
+        <div class="choice"><input id="track-not-sure" type="radio" name="track" value="not-sure"><label for="track-not-sure">Not sure yet</label></div>
+        <p class="field-error" id="err-track" hidden></p>
+      </fieldset>
+      <div class="field">
+        <label for="f-need">What do you need? <span class="req">(required)</span></label>
+        <textarea id="f-need" name="need" rows="6" required aria-describedby="err-need"></textarea>
+        <p class="field-error" id="err-need" hidden></p>
+      </div>
+      <div class="field">
+        <label for="f-timeline">Timeline</label>
+        <select id="f-timeline" name="timeline">
+          <option value="">Choose one</option>
+          <option>As soon as possible</option>
+          <option>Within a month</option>
+          <option>In the next few months</option>
+          <option>No fixed date</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-budget">Budget range <span class="opt">(optional)</span></label>
+        <select id="f-budget" name="budget">
+          <option value="">Prefer not to say</option>
+          <option>Under $1,000</option>
+          <option>$1,000 to $5,000</option>
+          <option>$5,000 to $15,000</option>
+          <option>More than $15,000</option>
+          <option>Not sure yet</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-heard_from">How did you hear about me?</label>
+        <input id="f-heard_from" name="heard_from" type="text">
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">Open my email program</button>
+        <button class="btn btn-secondary" type="button" id="copy-request">Copy request text</button>
+      </div>
+      <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      <div id="preview-box" hidden>
+        <label for="request-preview">Your request, as it will appear in the email</label>
+        <textarea id="request-preview" rows="12" readonly></textarea>
+      </div>
+      <p class="fine">This page does not send, store or track anything. Your message goes only where you send it from your own email program.</p>
+    </form>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="rule" aria-hidden="true"></div>
+  <div class="wrap footer-row">
+    <div>
+      <p class="footer-name">Jay Rohrs</p>
+      <p>Denver, Colorado</p>
+      <p><a class="btn btn-gold" href="start.html">Start a project</a></p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="mailto:jayrohrs@gmail.com">jayrohrs@gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/jay-rohrs" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr"> (opens in a new tab)</span></a></li>
+      <li><a href="https://www.youtube.com/@JCliche/videos" target="_blank" rel="noopener noreferrer">YouTube<span class="sr"> (opens in a new tab)</span></a></li>
+    </ul>
+  </div>
+</footer>
+<script src="assets/site.js" defer></script>
+<script src="assets/intake.js" defer></script>
+<script src="assets/start.js" defer></script>
+</body>
+</html>
