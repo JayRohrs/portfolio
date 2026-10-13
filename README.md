@@ -7,7 +7,7 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 ## Files
 - content/site.json — every word, link and project on the site. Only Verified/Confirmed public links. Items marked NEEDS_JAY wait for his answer.
 - SITE_SPEC.md — the design brief for the builder (from INFORMATION_ARCHITECTURE.md and the AV resume look Jay picked).
-- downloads/ — at upload time: the current public resumes from resumes/public-downloads (AV V5.8, IT V4.6) and the master headshot (Jay adds it himself).
+- downloads/ — at upload time: the current public resumes from resumes/public-downloads (now AV V6.0 and IT V4.8.1, public-safe) and the master headshot (Jay adds it himself).
 
 ## Rules
 - Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client, church-governance or OCRA material; drone credential claims.

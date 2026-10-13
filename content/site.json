@@ -244,13 +244,13 @@
   "resumes": [
     {
       "label": "AV & Media Résumé",
-      "file": "Jay_Rohrs_AV_Resume_V5.8_Public_Photo_Edition.pdf",
+      "file": "Jay_Rohrs_AV_Resume_V6.0_Public_Safe_Photo_Edition.pdf",
       "note": "Current public version; will be replaced when the new AV master is approved.",
       "track": "av"
     },
     {
       "label": "Operations & Systems Résumé",
-      "file": "Jay_Rohrs_IT_Resume_V4.6_Public_Final.pdf",
+      "file": "Jay_Rohrs_IT_Resume_V4.8.1_Public_Safe.pdf",
       "note": "Current public version; will be replaced when the new IT master is approved.",
       "track": "it"
     }
@@ -377,7 +377,7 @@
         "proof": [
           {
             "label": "Operations & Systems Résumé (PDF)",
-            "file": "Jay_Rohrs_IT_Resume_V4.6_Public_Final.pdf"
+            "file": "Jay_Rohrs_IT_Resume_V4.8.1_Public_Safe.pdf"
           }
         ],
         "other_track": "av"
