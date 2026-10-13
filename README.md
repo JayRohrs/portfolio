@@ -13,3 +13,9 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 - Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client, church-governance or OCRA material; drone credential claims.
 - Readable and well balanced beats compact (Jay's rule for every document).
 - jBase may later update content/site.json through a portfolio manager, always with Jay's approval before publishing.
+
+## Building and publishing
+- `node build.mjs` regenerates every page from `content/site.json` (Node 18+, no installs). `node scripts/check.mjs` checks links.
+- The generated HTML is committed at the repo root, so GitHub Pages serves it directly.
+- **Turn on GitHub Pages (one-time):** repo → Settings → Pages → Build and deployment → Source: "Deploy from a branch" → Branch: `main`, folder `/ (root)` → Save. The site appears at `https://<user>.github.io/portfolio/` within a minute or two.
+- See `HOW_TO_UPDATE.md` for edits and `TODO.md` for open questions.
