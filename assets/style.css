@@ -266,3 +266,5 @@ nav { order: 3; width: 100%; }
 #preview-box { margin: 1.5rem 0; }
 #preview-box label { display: block; font-weight: 700; margin-bottom: .4rem; }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+.site-footer .btn-gold, .site-footer .btn-gold:hover { color: var(--plum-deep); }
+.site-footer .btn-gold:hover { background: #fff; }
