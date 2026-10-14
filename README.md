@@ -7,12 +7,12 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 ## Files
 - content/site.json — every word, link and project on the site. Only Verified/Confirmed public links. Items marked NEEDS_JAY wait for his answer.
 - SITE_SPEC.md — the design brief for the builder (from INFORMATION_ARCHITECTURE.md and the AV resume look Jay picked).
-- downloads/ — at upload time: the current public resumes from resumes/public-downloads (now AV V6.0 and IT V4.8.1, public-safe) and the master headshot (Jay adds it himself).
+- downloads/ — current approved public PDFs: AV V6.1 and IT V4.9. Private masters and their supporting records stay outside this repository.
 
 ## Rules
-- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client, church-governance or OCRA material; drone credential claims.
+- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client or church-governance material; drone credential claims.
 - Readable and well balanced beats compact (Jay's rule for every document).
-- jBase may later update content/site.json through a portfolio manager, always with Jay's approval before publishing.
+- A private admin system may later propose public content updates through a pull request, always with Jay's approval before publishing. See `docs/UPDATE_CONTRACT.md`.
 
 ## Building and publishing
 - `node build.mjs` regenerates every page from `content/site.json` (Node 18+, no installs). `node scripts/check.mjs` checks links.

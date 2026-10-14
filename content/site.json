@@ -12,7 +12,7 @@
     "Gothamist, Gawker or CBS for Wall Street Pillow Fight (unverified; NBC New York is confirmed)",
     "Drone and Hawaii clips (no links yet; family permission needed for the swimmer shot)",
     "Phone number (contact by email/LinkedIn only on the public site)",
-    "Private career, client, church-governance and OCRA material"
+    "Private career, client, church-governance and other private material"
   ],
   "person": {
     "name": "Jay Rohrs",
@@ -24,8 +24,8 @@
     "linkedin": "https://www.linkedin.com/in/jay-rohrs",
     "youtube": "https://www.youtube.com/@JCliche/videos",
     "headshot": "PROVIDED_BY_JAY_AT_UPLOAD (master headshot; used only in the About section)",
-    "service_area": "[NEEDS JAY: service area wording]",
-    "phone": "[NEEDS JAY: show a phone number? Currently NO]"
+    "service_area": "Denver and remote; travel by arrangement",
+    "phone": ""
   },
   "credibility_strip": [
     {
@@ -244,20 +244,19 @@
   "resumes": [
     {
       "label": "AV & Media Résumé",
-      "file": "Jay_Rohrs_AV_Resume_V6.0_Public_Safe_Photo_Edition.pdf",
-      "note": "Current public version; will be replaced when the new AV master is approved.",
+      "file": "Jay_Rohrs_AV_Resume_V6.1_Public_Photo_Edition.pdf",
+      "note": "Current approved public-safe resume · AV V6.1",
       "track": "av"
     },
     {
       "label": "Operations & Systems Résumé",
-      "file": "Jay_Rohrs_IT_Resume_V4.8.1_Public_Safe.pdf",
-      "note": "Current public version; will be replaced when the new IT master is approved.",
+      "file": "Jay_Rohrs_IT_Resume_V4.9_Public_Final.pdf",
+      "note": "Current approved public-safe resume · IT V4.9",
       "track": "it"
     }
   ],
   "contact_cta": "Need someone who can tell the story and keep the system working?",
   "credits_note": "Production assistant on Cato Falls and Culture Café: Ellyn Scott (approved for public credit by Jay, 2026-10-12). Show as a small \"Team\" credit line on those case studies.",
-  "youtube_owner_check": "Jay's videos are on the YouTube account tied to jaycliche@gmail.com (channel @JCliche). NBC New York claim stands as Jay-confirmed; a YouTube Studio read of the original upload can add proof later.",
   "work_filters": [
     "Featured",
     "Documentary",
@@ -379,7 +378,7 @@
         "proof": [
           {
             "label": "Operations & Systems Résumé (PDF)",
-            "file": "Jay_Rohrs_IT_Resume_V4.8.1_Public_Safe.pdf"
+            "file": "Jay_Rohrs_IT_Resume_V4.9_Public_Final.pdf"
           }
         ],
         "other_track": "av"

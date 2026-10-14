@@ -9,6 +9,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateSite } from "./validate-update.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const raw = readFileSync(join(root, "content/site.json"), "utf8");
@@ -31,6 +32,7 @@ let problems = 0;
 let checks = 0;
 const bad = (m) => { problems++; console.error("PROBLEM:", m); };
 const ok = (cond, msg) => { checks++; if (!cond) bad(msg); };
+for (const problem of validateSite(site)) bad(`content/site.json: ${problem}`);
 
 const titles = new Map();
 const descs = new Map();
@@ -89,9 +91,8 @@ for (const file of htmlFiles) {
 
   // content rules
   ok(!/\[NEEDS JAY/i.test(html), `${rel}: placeholder text [NEEDS JAY ...] on a live page`);
-  // the public domain itself may contain "jbase"; the name must not appear anywhere else
-  ok(!/confidential|internal use|\bTODO\b|OCRA|jBase/i.test(html.replace(/jbase\.app/gi, "")), `${rel}: internal-note marker or private name on a live page`);
-  ok(!/brain\.jbase/i.test(html), `${rel}: private subdomain named on a live page`);
+  ok(!/confidential|internal use|\bTODO\b/i.test(html), `${rel}: internal-note marker on a live page`);
+  ok(!/(?<![A-Za-z0-9.-])(?:https?:\/\/)?(?!www\.)[A-Za-z0-9-]+\.jbase\.app/i.test(html), `${rel}: non-public subdomain named on a live page`);
   ok(!/tel:|google-analytics|gtag|googletagmanager|fbq\(|plausible|matomo|hotjar/i.test(html), `${rel}: forbidden tracking/phone link`);
   const emails = (html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter((e) => !/^name@example\.com$/.test(e));
   ok(emails.every((e) => e === site.person.email), `${rel}: unapproved email address ${emails.filter((e) => e !== site.person.email)}`);

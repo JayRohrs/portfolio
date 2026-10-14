@@ -4,9 +4,16 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateSite } from "./scripts/validate-update.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const site = JSON.parse(readFileSync(join(ROOT, "content/site.json"), "utf8"));
+const problems = validateSite(site);
+if (problems.length) {
+  for (const problem of problems) console.error(`FAIL ${problem}`);
+  console.error("Build stopped before writing files: fix the proposed content first.");
+  process.exit(1);
+}
 const { person } = site;
 
 const esc = (s) =>
@@ -36,6 +43,7 @@ const NAV = [
 const client = site.client;
 // Placeholders such as "[NEEDS JAY: ...]" never reach a live page.
 const shown = (v) => (typeof v === "string" && v.trim() && !/^\[NEEDS JAY/i.test(v.trim()) ? v : "");
+const serviceArea = () => shown(person.service_area) ? `<p>${esc(person.service_area)}</p>` : "";
 const SITE_URL = (process.env.SITE_URL ?? site.site_url ?? "").trim().replace(/\/+$/, "");
 const services = client.services;
 const svc = (id) => services.find((x) => x.id === id);
@@ -183,7 +191,7 @@ ${body(rootPrefix)}
     <div>
       <p class="footer-name">Jay Rohrs</p>
       <p>${esc(person.location)}</p>
-      <p><a class="btn btn-gold" href="${rootPrefix}start.html">Start a project</a></p>
+      <p><a class="btn btn-accent" href="${rootPrefix}start.html">Start a project</a></p>
     </div>
     <ul class="footer-links">
       <li><a href="${rootPrefix}services.html">Services</a></li>
@@ -352,7 +360,7 @@ ${wall(r, client.home.wall_heading, client.home.wall_intro)}
   <div class="wrap narrow center">
     <h2>${esc(site.contact_cta)}</h2>
     <div class="actions center-actions">
-      <a class="btn btn-gold" href="${r}start.html">Start a project</a>
+      <a class="btn btn-accent" href="${r}start.html">Start a project</a>
       <a class="btn btn-light" href="${r}resume.html">Résumés</a>
     </div>
   </div>
@@ -542,6 +550,7 @@ pages.push(
       <li><span class="label">YouTube</span> ${ext(person.youtube, "Videos on YouTube")}</li>
     </ul>
     <p>${esc(person.location)}. ${esc(person.availability)}.</p>
+    ${serviceArea()}
     <p><a class="btn btn-primary" href="start.html">Start a project</a></p>
   </div>
 </section>`,
@@ -576,6 +585,7 @@ pages.push(
   <div class="wrap">
     <h1>Services</h1>
     <p class="lede">${esc(client.home.intro)}</p>
+    ${serviceArea()}
   </div>
 </section>
 <section class="section">
@@ -593,7 +603,7 @@ ${howItWorks()}
 <section class="contact-band">
   <div class="wrap narrow center">
     <h2>${esc(site.contact_cta)}</h2>
-    <p class="actions center-actions"><a class="btn btn-gold" href="${r}start.html">Start a project</a></p>
+    <p class="actions center-actions"><a class="btn btn-accent" href="${r}start.html">Start a project</a></p>
   </div>
 </section>`,
   })
@@ -638,6 +648,7 @@ for (const x of services) {
     <aside class="case-side" aria-label="Getting started">
       <h2 class="h3">${esc(client.first_step_title)}</h2>
       <p>${esc(x.first_step)}</p>
+      ${serviceArea()}
       <p><span class="label">Price</span><br>${esc(client.pricing)}</p>
       <p><a class="btn btn-primary" href="${r}start.html">Start a project</a></p>
     </aside>
