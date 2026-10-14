@@ -10,9 +10,9 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 - downloads/ — at upload time: the current public resumes from resumes/public-downloads (now AV V6.0 and IT V4.8.1, public-safe) and the master headshot (Jay adds it himself).
 
 ## Rules
-- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client, church-governance or OCRA material; drone credential claims.
+- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client or church-governance material; drone credential claims.
 - Readable and well balanced beats compact (Jay's rule for every document).
-- jBase may later update content/site.json through a portfolio manager, always with Jay's approval before publishing.
+- A private admin system may later propose public content updates through a pull request, always with Jay's approval before publishing. See `docs/UPDATE_CONTRACT.md`.
 
 ## Building and publishing
 - `node build.mjs` regenerates every page from `content/site.json` (Node 18+, no installs). `node scripts/check.mjs` checks links.

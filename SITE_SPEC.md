@@ -26,5 +26,5 @@ Source: Jay's INFORMATION_ARCHITECTURE.md (homepage + portfolio layout) and the 
 - About, Résumé (both PDF downloads), Contact.
 
 ## Build
-- Plain static site (no server), deployable free on GitHub Pages; one content file (content/site.json) drives every page so jBase or Jay can update it without touching code.
+- Plain static site (no server), deployable free on GitHub Pages; one content file (content/site.json) drives every page so Jay or a private admin system can propose updates without touching code.
 - Small, fast, no tracking scripts, no cookies banner needed.

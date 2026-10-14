@@ -1,6 +1,6 @@
 # Questions for Jay
 
-Nothing below is shown on the live site until it is answered. Placeholders in `content/site.json` that start with "[NEEDS JAY" are hidden automatically.
+Nothing below is shown on the live site until it is answered. Keep unanswered facts here; leave their `content/site.json` fields empty so the update validator passes.
 
 ## Services
 1. **Which services do you want listed under each track?** I drew the lists only from your public résumés and `content/site.json`:
@@ -14,9 +14,9 @@ Nothing below is shown on the live site until it is answered. Placeholders in `c
 
 ## Contact and reach
 6. **Preferred contact route** (email only, email plus LinkedIn, a booking link). Today: the form opens the visitor's email program; the address is `jayrohrs@gmail.com`.
-7. **Phone number:** currently NOT shown anywhere. Keep it that way?
+7. **Phone number:** resolved by the public-site rule: no phone number is shown.
 8. **Service area wording** (for example "Denver and remote"). Hidden until you decide; the hidden field is `person.service_area`.
-9. **Domain name.** When you have the final address, put it in `site_url` in `content/site.json` and rebuild: that switches on canonical links and `sitemap.xml`. See `HOW_TO_UPDATE.md`.
+9. **Domain name:** `https://www.jbase.app` served the portfolio on 2026-10-14. `site_url` is set to that address; canonical links and `sitemap.xml` are built.
 
 ## Wording and facts
 10. **Prices.** Every services page says "Quote on request". Keep?
