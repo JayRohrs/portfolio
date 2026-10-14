@@ -19,4 +19,6 @@ The build also regenerates HTML pages, `sitemap.xml`, `robots.txt` and `TODO.md`
 
 The validator accepts only the current public domain, approved link hosts, the single public contact address, direct YouTube video URLs, and PDF filenames present in `downloads/`. A needed new host or contact route requires a deliberate review of the validator and site content in the same PR. Unanswered facts belong in `docs/NEEDS_JAY.md`, never as `[NEEDS JAY` text in `site.json`.
 
+The build runs the same validator before writing or removing generated files. Required page and form fields must be present, project IDs must be unique safe filename slugs, service paths must match `services/it.html`, `services/av.html` or `services/ai.html`, and proof links must reference an existing PDF or visible project. Invalid content leaves the existing pages untouched.
+
 Inquiry intake remains `mailto:` plus Copy request text. The later private inquiry endpoint in `docs/ORDER_INTAKE.md` is design only and needs Jay's explicit approval before implementation.

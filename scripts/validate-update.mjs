@@ -24,6 +24,16 @@ export function validateSite(site) {
     }
     return true;
   };
+  const strings = (items, path) => {
+    if (required(items, path, "array")) items.forEach((item, i) => required(item, `${path}[${i}]`, "string"));
+  };
+  const records = (items, path, keys) => {
+    if (!required(items, path, "array")) return;
+    items.forEach((item, i) => {
+      const at = `${path}[${i}]`;
+      if (required(item, at, "object")) for (const key of keys) required(item[key], `${at}.${key}`, "string");
+    });
+  };
   const pdf = (name, path) => {
     if (typeof name !== "string" || !/^[A-Za-z0-9][A-Za-z0-9._-]*\.pdf$/i.test(name)) {
       bad(path, "must be a PDF filename in downloads/ without a directory path");
@@ -45,36 +55,96 @@ export function validateSite(site) {
 
   if (!required(site, "site", "object")) return problems;
   for (const key of ["person", "client", "about"]) required(site[key], key, "object");
-  for (const key of ["featured", "additional_proof", "resumes", "library", "credibility_strip", "capabilities", "work_filters"]) required(site[key], key, "array");
+  for (const key of ["featured", "resumes", "library"]) required(site[key], key, "array");
+  records(site.additional_proof, "additional_proof", ["title", "role", "why", "url"]);
+  if (Array.isArray(site.additional_proof)) site.additional_proof.forEach((proof, i) => {
+    if (object(proof)) strings(proof.tags, `additional_proof[${i}].tags`);
+  });
+  records(site.credibility_strip, "credibility_strip", ["figure", "label"]);
+  records(site.capabilities, "capabilities", ["name", "evidence"]);
+  strings(site.work_filters, "work_filters");
+  strings(site.current_practice, "current_practice");
+  required(site.contact_cta, "contact_cta", "string");
+  if (object(site.about)) {
+    strings(site.about.paragraphs, "about.paragraphs");
+    records(site.about.timeline, "about.timeline", ["year", "text"]);
+  }
   if (site.person && object(site.person)) {
-    for (const key of ["name", "headline", "statement", "location", "email", "linkedin", "youtube"]) required(site.person[key], `person.${key}`, "string");
+    for (const key of ["name", "headline", "statement", "location", "availability", "email", "linkedin", "youtube"]) required(site.person[key], `person.${key}`, "string");
     if (site.person.email !== "jayrohrs@gmail.com") bad("person.email", "must remain the approved public address");
     if (site.person.phone) bad("person.phone", "phone numbers are not permitted on this site");
   }
   if (site.site_url !== "" && site.site_url !== "https://www.jbase.app") bad("site_url", "must be empty or https://www.jbase.app");
   if (site.client && object(site.client)) {
     for (const key of ["home", "start"]) required(site.client[key], `client.${key}`, "object");
+    for (const key of ["pricing", "first_step_title"]) required(site.client[key], `client.${key}`, "string");
+    records(site.client.how_it_works, "client.how_it_works", ["step", "text"]);
+    if (object(site.client.home)) {
+      for (const key of ["hero_line", "intro_heading", "intro", "ai_heading", "ai_text", "proof_heading", "proof_intro", "wall_heading", "wall_intro"]) {
+        required(site.client.home[key], `client.home.${key}`, "string");
+      }
+    }
+    if (object(site.client.start)) {
+      for (const key of ["title", "description", "intro"]) required(site.client.start[key], `client.start.${key}`, "string");
+      records(site.client.start.tracks, "client.start.tracks", ["value", "label"]);
+      if (Array.isArray(site.client.start.tracks)) {
+        const values = site.client.start.tracks.map((track) => track?.value);
+        const expected = ["it", "av", "both", "not-sure"];
+        if (values.length !== expected.length || expected.some((value) => !values.includes(value))) {
+          bad("client.start.tracks", "must contain each supported track exactly once: it, av, both, not-sure");
+        }
+      }
+      for (const key of ["timelines", "budgets"]) strings(site.client.start[key], `client.start.${key}`);
+    }
     required(site.client.services, "client.services", "array");
     if (Array.isArray(site.client.services)) {
       const ids = new Set(site.client.services.map((service) => service?.id));
       for (const id of ["it", "av", "ai"]) if (!ids.has(id)) bad("client.services", `missing ${id} service`);
+      if (site.client.services.length !== 3 || ids.size !== 3) bad("client.services", "must contain exactly one it, av and ai service");
       site.client.services.forEach((service, i) => {
-        if (!required(service, `client.services[${i}]`, "object")) return;
-        for (const key of ["id", "title", "track", "tagline"]) required(service[key], `client.services[${i}].${key}`, "string");
-        required(service.types, `client.services[${i}].types`, "array");
+        const at = `client.services[${i}]`;
+        if (!required(service, at, "object")) return;
+        for (const key of ["id", "path", "title", "track", "tagline", "description", "who_for", "first_step"]) required(service[key], `${at}.${key}`, "string");
+        if (!["it", "av", "ai"].includes(service.id) || service.path !== `services/${service.id}.html`) {
+          bad(`${at}.path`, "must be the matching services/it.html, services/av.html or services/ai.html path");
+        }
+        records(service.types, `${at}.types`, ["name", "text"]);
+        if (service.ideas !== undefined) {
+          strings(service.ideas, `${at}.ideas`);
+          for (const key of ["ideas_heading", "ideas_intro"]) required(service[key], `${at}.${key}`, "string");
+        }
+        if (service.other_track && !["it", "av", "ai"].includes(service.other_track)) bad(`${at}.other_track`, "must reference an existing service");
+        records(service.proof, `${at}.proof`, ["label"]);
         if (Array.isArray(service.proof)) service.proof.forEach((proof, j) => {
-          if (proof?.file !== undefined) pdf(proof.file, `client.services[${i}].proof[${j}].file`);
+          if (!object(proof)) return;
+          const proofAt = `${at}.proof[${j}]`;
+          if ((proof.file !== undefined) === (proof.project !== undefined)) {
+            bad(proofAt, "must reference exactly one PDF file or visible project");
+          }
+          if (proof.file !== undefined) pdf(proof.file, `${proofAt}.file`);
+          if (proof.project !== undefined && (!Array.isArray(site.featured) || !site.featured.some((project) => object(project) && project.id === proof.project && Array.isArray(project.videos) && project.videos.length))) {
+            bad(`${proofAt}.project`, "must reference a visible project with public videos");
+          }
         });
       });
     }
   }
+  const projectIds = new Set();
   if (Array.isArray(site.featured)) site.featured.forEach((project, i) => {
     const at = `featured[${i}]`;
     if (!required(project, at, "object")) return;
     for (const key of ["id", "title", "type", "role", "why"]) required(project[key], `${at}.${key}`, "string");
+    if (typeof project.id !== "string" || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(project.id) || /^(?:con|prn|aux|nul|com[0-9]|lpt[0-9])$/.test(project.id)) {
+      bad(`${at}.id`, "must be a safe lowercase filename slug");
+    }
+    if (projectIds.has(project.id)) bad(`${at}.id`, "duplicate project ID");
+    projectIds.add(project.id);
+    strings(project.tags, `${at}.tags`);
+    if (project.team !== undefined) strings(project.team, `${at}.team`);
     videos(project.videos, `${at}.videos`);
   });
   if (Array.isArray(site.library)) videos(site.library, "library");
+  if (Array.isArray(site.resumes) && site.resumes.length < 2) bad("resumes", "must include both public resume editions");
   if (Array.isArray(site.resumes)) site.resumes.forEach((resume, i) => {
     const at = `resumes[${i}]`;
     if (!required(resume, at, "object")) return;

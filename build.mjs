@@ -4,9 +4,16 @@
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateSite } from "./scripts/validate-update.mjs";
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const site = JSON.parse(readFileSync(join(ROOT, "content/site.json"), "utf8"));
+const problems = validateSite(site);
+if (problems.length) {
+  for (const problem of problems) console.error(`FAIL ${problem}`);
+  console.error("Build stopped before writing files: fix the proposed content first.");
+  process.exit(1);
+}
 const { person } = site;
 
 const esc = (s) =>
