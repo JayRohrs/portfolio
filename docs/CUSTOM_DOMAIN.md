@@ -1,6 +1,8 @@
 # Putting the site on www.jbase.app (GitHub Pages + Cloudflare)
 
-Do these in order. Leave every existing DNS record (including any private subdomain) untouched.
+Status: the public domain served the portfolio on 2026-10-14. The setup steps below are historical reference; no settings change is needed for this update.
+
+These were the setup steps. Any future repair must preserve existing DNS records, including private records.
 
 ## 1. GitHub
 1. Review and merge the pull request into `main`.

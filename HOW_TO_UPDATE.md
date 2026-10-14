@@ -21,8 +21,5 @@ A private admin system may author only `content/site.json`, public-safe PDFs in 
 - Keep unanswered facts in `docs/NEEDS_JAY.md` and leave their content fields empty. The update validator rejects `[NEEDS JAY: ...]` text in `content/site.json`; the page checker also rejects it on live pages.
 - The form opens the visitor's email program with a ready-made request. It sends nothing itself. Details and the request format: `docs/ORDER_INTAKE.md`.
 
-## Turning on the web address, canonical links and sitemap
-`site_url` in `content/site.json` is empty on purpose. While it is empty, the build leaves out canonical links, `og:url` and `sitemap.xml`.
-1. When the final address is known, set it with no trailing slash, for example `"site_url": "https://example.org"` (for a GitHub Pages project site, include the folder: `https://<user>.github.io/portfolio`).
-2. Run `node build.mjs` then `node scripts/check.mjs`, commit and push.
-3. `404.html` links work from the site root; once `site_url` is set they use the full address, so they also work from deeper pages.
+## Web address, canonical links and sitemap
+`site_url` is set to `https://www.jbase.app`, which served the portfolio on 2026-10-14. The build includes canonical links, `og:url` and `sitemap.xml`; `404.html` uses full-address links. If the public domain stops serving the site, set `site_url` to an empty string in a review branch, rebuild and check before opening a pull request.
