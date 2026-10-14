@@ -6,7 +6,7 @@ Nothing below is shown on the live site until it is answered. Keep unanswered fa
 1. **Which services do you want listed under each track?** I drew the lists only from your public résumés and `content/site.json`:
    - IT & Systems: Microsoft 365 administration; email and sign-in security (MFA, phishing and spam); everyday support and equipment; Restaurant365 automation checks; documentation and handover.
    - AV & Production: livestreams and hybrid events; church and community AV; field production and documentary; editing and delivery; music, performance and short commercials.
-   Revisions are still underway. A general service-sheet draft is in `docs/SERVICE_SHEET_DRAFT.md` for review; it does not replace the current service lists or resume PDFs.
+   The approved AV V6.1 and IT V4.9 public PDFs are complete and were published through PR #5. A general service-sheet draft is in `docs/SERVICE_SHEET_DRAFT.md` for review; final service selection and wording still need Jay's answers.
    [NEEDS JAY: Which offerings should lead the service sheet, and which should be removed or narrowed?]
 2. **Local and cloud AI.** Nothing in your résumés or site.json describes AI services beyond "AI-assisted research and ideation with human editorial judgment" and your automation checks. I did not list "practical use of local and cloud AI" as a service. What have you actually done or want to offer?
 3. **The three "AI where they meet" examples** (captioned and searchable video archives; reports that watch business data; written plus produced how-to material) are shown as "Ideas worth a first conversation", not as past work. Keep, reword or remove?
@@ -23,6 +23,6 @@ Nothing below is shown on the live site until it is answered. Keep unanswered fa
 10. **Prices:** "Quote on request" confirmed by Jay on 2026-10-14. No rates or travel charges have been supplied.
 11. **How it works** (talk → small first step → deliver → follow up) and the "small paid first step" idea are my plain-language description of a sensible process. Does it match how you work?
 12. **About text.** Only your approved About text is live. A client-focused draft for your approval is in `docs/ABOUT_DRAFT.md`.
-13. **Résumé notes** ("will be replaced when the new master is approved") are not shown. Show them?
+13. **Résumés:** approved AV V6.1 and IT V4.9 public PDFs are current. The old replacement-pending notes have been replaced with approved-edition notes, which remain internal.
 14. **Art of War Comic Con year** and the **Wall Street Pillow Fight** link: still open from before (see `TODO.md`).
 15. **Budget ranges on the form** (under $1,000 … more than $15,000) are choices for the visitor to pick from, not prices you charge. Change the bands if they do not suit your work: `client.start.budgets`.

@@ -1,6 +1,6 @@
 # General service sheet draft
 
-For Jay's review. Based on the current public content and his confirmed reach and pricing wording. Resume and service revisions are still in progress; this draft is not linked from the site.
+For Jay's review. Based on the public site content and his confirmed reach and pricing wording. The approved AV V6.1 and IT V4.9 public resumes are complete; service selection and wording still need review. This draft is not linked from the site.
 
 ---
 
@@ -40,7 +40,7 @@ Contact: jayrohrs@gmail.com
 
 ## Review before publication
 
-- Confirm the offerings against Jay's upcoming revisions and choose the strongest ones to lead each track.
+- Confirm the offerings against Jay's approved current resumes and choose the strongest ones to lead each track.
 - Confirm any scope limits or services Jay does not want to offer.
 - Decide whether to add an AI and automation section after Jay supplies the actual work and services he wants described.
 
