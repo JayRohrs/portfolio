@@ -89,7 +89,9 @@ for (const file of htmlFiles) {
 
   // content rules
   ok(!/\[NEEDS JAY/i.test(html), `${rel}: placeholder text [NEEDS JAY ...] on a live page`);
-  ok(!/confidential|internal use|\bTODO\b|OCRA|jBase/i.test(html), `${rel}: internal-note marker or private name on a live page`);
+  // the public domain itself may contain "jbase"; the name must not appear anywhere else
+  ok(!/confidential|internal use|\bTODO\b|OCRA|jBase/i.test(html.replace(/jbase\.app/gi, "")), `${rel}: internal-note marker or private name on a live page`);
+  ok(!/brain\.jbase/i.test(html), `${rel}: private subdomain named on a live page`);
   ok(!/tel:|google-analytics|gtag|googletagmanager|fbq\(|plausible|matomo|hotjar/i.test(html), `${rel}: forbidden tracking/phone link`);
   const emails = (html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter((e) => !/^name@example\.com$/.test(e));
   ok(emails.every((e) => e === site.person.email), `${rel}: unapproved email address ${emails.filter((e) => e !== site.person.email)}`);

@@ -311,7 +311,7 @@
       }
     ]
   },
-  "site_url": "",
+  "site_url": "https://www.jbase.app",
   "client": {
     "home": {
       "hero_line": "Technology that keeps working, and video that tells your story.",
@@ -320,7 +320,9 @@
       "ai_heading": "Where the two meet: AI and automation",
       "ai_text": "Both tracks reward the same habits: spot the work that repeats, check it carefully, and keep a person in charge. If that sounds useful, there is a short page about it.",
       "proof_heading": "Work you can watch",
-      "proof_intro": "Videos from the AV and media track. Open a case study to see what I did and why it mattered."
+      "proof_intro": "Videos from the AV and media track. Open a case study to see what I did and why it mattered.",
+      "wall_heading": "More to watch",
+      "wall_intro": "A wider look at videos from across the work. Each one opens on YouTube."
     },
     "how_it_works": [
       {
@@ -500,5 +502,6 @@
         "Not sure yet"
       ]
     }
-  }
+  },
+  "library": []
 }
