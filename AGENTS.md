@@ -15,7 +15,7 @@ This is Jay Rohrs's public portfolio and client-intake site. It is a plain stati
 - Videos load only on click (youtube-nocookie). The headshot appears only in About areas.
 - The repo is public: no private career, client, church-governance, employer or financial details, no customer data, no keys or tokens, and never name the private subdomain or private systems. `docs/` describes a private admin system only as "a private admin system".
 - Keep the two tracks (IT & Systems, AV & Production) separate on every page.
-- Keep the look: plum / rust / clay / gold, serif headings, 390 px friendly, 44 px tap targets, text never shrunk to fit, contrast at least 4.5:1 (`node scripts/contrast.mjs`).
+- Keep the look: near-black plum sections with blue / berry / lilac accents, serif headings, 390 px friendly, 44 px tap targets, text never shrunk to fit, contrast at least 4.5:1 (`node scripts/contrast.mjs`).
 
 ## Useful docs
 `README.md`, `HOW_TO_UPDATE.md`, `SITE_SPEC.md`, `docs/ORDER_INTAKE.md`, `docs/LIBRARY_IMPORT.md`, `docs/CUSTOM_DOMAIN.md`, `docs/NEEDS_JAY.md`.

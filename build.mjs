@@ -183,7 +183,7 @@ ${body(rootPrefix)}
     <div>
       <p class="footer-name">Jay Rohrs</p>
       <p>${esc(person.location)}</p>
-      <p><a class="btn btn-gold" href="${rootPrefix}start.html">Start a project</a></p>
+      <p><a class="btn btn-accent" href="${rootPrefix}start.html">Start a project</a></p>
     </div>
     <ul class="footer-links">
       <li><a href="${rootPrefix}services.html">Services</a></li>
@@ -352,7 +352,7 @@ ${wall(r, client.home.wall_heading, client.home.wall_intro)}
   <div class="wrap narrow center">
     <h2>${esc(site.contact_cta)}</h2>
     <div class="actions center-actions">
-      <a class="btn btn-gold" href="${r}start.html">Start a project</a>
+      <a class="btn btn-accent" href="${r}start.html">Start a project</a>
       <a class="btn btn-light" href="${r}resume.html">Résumés</a>
     </div>
   </div>
@@ -593,7 +593,7 @@ ${howItWorks()}
 <section class="contact-band">
   <div class="wrap narrow center">
     <h2>${esc(site.contact_cta)}</h2>
-    <p class="actions center-actions"><a class="btn btn-gold" href="${r}start.html">Start a project</a></p>
+    <p class="actions center-actions"><a class="btn btn-accent" href="${r}start.html">Start a project</a></p>
   </div>
 </section>`,
   })

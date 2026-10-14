@@ -3,8 +3,8 @@
 Source: Jay's INFORMATION_ARCHITECTURE.md (homepage + portfolio layout) and the AV resume look Jay picked on 2026-10-12. All words, links and projects come from content/site.json — don't add claims.
 
 ## Look
-- Warm and professional, matching the AV resume: deep plum (#2a1220 / #6b1f3a), rust (#c0562a), clay (#a8574a), gold (#d9a441) on white; serif headings, clean sans-serif body.
-- The thin plum–rust–clay–gold segmented rule is the brand device: header and a few key places, not under every heading.
+- Dark and professional: near-black plum content sections (#0d0812), plum cards (#211426), blue (#4d72ad), berry (#a44969), and lilac (#c5a2ce) accents; serif headings, clean sans-serif body.
+- The thin plum-blue-berry-lilac segmented rule is the brand device: header and a few key places, not under every heading.
 - Readable and well balanced first: generous text size and spacing, works at 390 px phone width, no sideways scroll, 44 px tap targets, good contrast, real headings and alt text.
 - No autoplay audio; no big YouTube player above the fold. Videos load only when clicked (thumbnail first, privacy-enhanced youtube-nocookie embeds).
 
