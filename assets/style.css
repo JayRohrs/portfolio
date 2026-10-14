@@ -129,6 +129,7 @@ nav { order: 3; width: 100%; }
 .section:not(.tint) .btn-secondary:hover { background: #fff8fb; color: var(--plum-deep); }
 .section:not(.tint) .case-side, .section:not(.tint) .notice, .section:not(.tint) .form-errors { color: var(--ink); }
 .section:not(.tint) .case-side h2, .section:not(.tint) .case-side h3 { color: var(--plum-deep); }
+.section:not(.tint) .case-side .label { color: var(--muted); }
 .section:not(.tint) .case-side a:not(.btn), .section:not(.tint) .notice a:not(.btn), .section:not(.tint) .form-errors a:not(.btn) { color: var(--plum); }
 .section:not(.tint) .form-status { color: #fff8fb; }
 .section:not(.tint) .field-error { color: #ffb5b8; }

@@ -43,6 +43,7 @@ const NAV = [
 const client = site.client;
 // Placeholders such as "[NEEDS JAY: ...]" never reach a live page.
 const shown = (v) => (typeof v === "string" && v.trim() && !/^\[NEEDS JAY/i.test(v.trim()) ? v : "");
+const serviceArea = () => shown(person.service_area) ? `<p>${esc(person.service_area)}</p>` : "";
 const SITE_URL = (process.env.SITE_URL ?? site.site_url ?? "").trim().replace(/\/+$/, "");
 const services = client.services;
 const svc = (id) => services.find((x) => x.id === id);
@@ -549,6 +550,7 @@ pages.push(
       <li><span class="label">YouTube</span> ${ext(person.youtube, "Videos on YouTube")}</li>
     </ul>
     <p>${esc(person.location)}. ${esc(person.availability)}.</p>
+    ${serviceArea()}
     <p><a class="btn btn-primary" href="start.html">Start a project</a></p>
   </div>
 </section>`,
@@ -583,6 +585,7 @@ pages.push(
   <div class="wrap">
     <h1>Services</h1>
     <p class="lede">${esc(client.home.intro)}</p>
+    ${serviceArea()}
   </div>
 </section>
 <section class="section">
@@ -645,6 +648,7 @@ for (const x of services) {
     <aside class="case-side" aria-label="Getting started">
       <h2 class="h3">${esc(client.first_step_title)}</h2>
       <p>${esc(x.first_step)}</p>
+      ${serviceArea()}
       <p><span class="label">Price</span><br>${esc(client.pricing)}</p>
       <p><a class="btn btn-primary" href="${r}start.html">Start a project</a></p>
     </aside>
