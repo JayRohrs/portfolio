@@ -4,7 +4,7 @@ const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
 const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
 const L = (h) => { const [r, g, b] = hex(h).map(lin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
 const ratio = (a, b) => { const [x, y] = [L(a), L(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
-const C = { plumDeep: "#2a1220", plum: "#6b1f3a", rust: "#c0562a", rustText: "#9c3f17", clay: "#a8574a", gold: "#d9a441", white: "#ffffff", tint: "#faf4f0", muted: "#5a4650", strip: "#f3e6ec", err: "#a4161a", errDark: "#7d1014", errBg: "#fdf1f1", fieldBorder: "#7a6570", dark: "#0d0812", darkCard: "#211426", darkText: "#f1e9ee", darkHeading: "#fff8fb", darkMuted: "#e0ccd8", darkLink: "#f0bf75", darkError: "#ffb5b8" };
+const C = { plumDeep: "#2a1220", plum: "#6b1f3a", rust: "#c0562a", rustText: "#9c3f17", clay: "#a8574a", gold: "#d9a441", white: "#ffffff", tint: "#faf4f0", muted: "#5a4650", strip: "#f3e6ec", err: "#a4161a", errDark: "#7d1014", errBg: "#fdf1f1", fieldBorder: "#7a6570", dark: "#0d0812", darkCard: "#211426", darkText: "#f1e9ee", darkHeading: "#fff8fb", darkMuted: "#e0ccd8", darkLink: "#f0bf75", darkError: "#ffb5b8", darkRequired: "#f0a479" };
 const pairs = [
   ["body text on white", C.plumDeep, C.white], ["body text on tint", C.plumDeep, C.tint],
   ["links (plum) on white", C.plum, C.white], ["links (plum) on tint", C.plum, C.tint],
@@ -21,6 +21,7 @@ const pairs = [
   ["card text on dark plum", C.darkText, C.darkCard], ["card muted text on dark plum", C.darkMuted, C.darkCard],
   ["links on dark plum", C.darkLink, C.dark], ["links on dark cards", C.darkLink, C.darkCard],
   ["form errors on dark plum", C.darkError, C.dark],
+  ["required labels on dark plum", C.darkRequired, C.dark], ["optional labels on dark plum", C.darkMuted, C.dark],
 ];
 let lowest = null;
 for (const [name, fg, bg] of pairs) {

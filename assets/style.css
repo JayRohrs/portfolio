@@ -131,6 +131,8 @@ nav { order: 3; width: 100%; }
 .section:not(.tint) .case-side a:not(.btn), .section:not(.tint) .notice a:not(.btn), .section:not(.tint) .form-errors a:not(.btn) { color: var(--plum); }
 .section:not(.tint) .form-status { color: #fff8fb; }
 .section:not(.tint) .field-error { color: #ffb5b8; }
+.section:not(.tint) .req { color: #f0a479; }
+.section:not(.tint) .opt { color: #e0ccd8; }
 .section:not(.tint) :focus-visible { outline-color: var(--gold); }
 .page-head { padding: 2.5rem 0 1rem; border-bottom: 1px solid var(--line); background: var(--tint); }
 .page-head h1 { margin-bottom: .3em; }
