@@ -206,6 +206,44 @@ const page = (file, opts) => ({ file, html: layout({ file, ...opts }) });
 const pages = [];
 const heroProject = featured.find((p) => p.id === "cato-falls") || featured[0];
 
+
+// ---- video wall ---------------------------------------------------------------
+// Every approved public video (featured projects, additional proof, and the optional
+// "library" list in site.json), de-duplicated, shown as small tiles.
+function libraryItems() {
+  const items = [];
+  for (const p of featured) for (const v of p.videos) items.push({ title: v.title, url: v.url, from: p.title });
+  for (const p of proof) if (ytId(p.url)) items.push({ title: p.title, url: p.url, from: p.title });
+  for (const v of site.library || []) items.push({ title: v.title, url: v.url, from: "" });
+  const seen = new Set();
+  return items.filter((x) => {
+    const id = ytId(x.url);
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    x.id = id;
+    return true;
+  });
+}
+
+function wall(r, heading, intro, level = "h2") {
+  const items = libraryItems();
+  return `<section class="wall" id="wall" aria-labelledby="wall-h">
+  <div class="wrap">
+    <${level} id="wall-h">${esc(heading)}</${level}>
+    <p class="narrow-text">${esc(intro)}</p>
+    <ul class="tiles">
+      ${items
+        .map((x) => {
+          const t = thumbFor(x.id);
+          const img = t ? `<img src="${r}${t}" alt="" width="480" height="360" loading="lazy" decoding="async">` : `<span class="ph" aria-hidden="true"></span>`;
+          return `<li><a class="tile" href="${esc(x.url)}" target="_blank" rel="noopener noreferrer"><span class="video-frame">${img}<span class="play play-sm" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M8 5v14l11-7z" fill="currentColor"/></svg></span></span><span class="tile-cap">${esc(x.title)}<span class="sr"> (opens on YouTube in a new tab)</span></span></a></li>`;
+        })
+        .join("\n      ")}
+    </ul>
+  </div>
+</section>`;
+}
+
 function trackCard(x, r) {
   return `<article class="track">
   <p class="eyebrow">${esc(x.track)}</p>
@@ -276,6 +314,8 @@ ${proof.map((p) => proofCard(p)).join("\n")}
     </div>
   </div>
 </section>
+
+${wall(r, client.home.wall_heading, client.home.wall_intro)}
 
 <section class="strip" aria-label="Highlights">
   <div class="wrap">
@@ -356,7 +396,8 @@ ${featured.map((p) => featuredCard(p, r, true)).join("\n")}
 ${proof.map((p) => proofCard(p, true)).join("\n")}
     </div>
   </div>
-</section>`;
+</section>
+${wall(r, "Video wall", client.home.wall_intro)}`;
     },
   })
 );
