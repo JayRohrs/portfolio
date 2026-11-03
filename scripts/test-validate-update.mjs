@@ -33,6 +33,11 @@ const cases = [
   ["bad form options", (s) => { s.client.start.budgets = null; }, "client.start.budgets"],
   ["unsupported intake track", (s) => { s.client.start.tracks[0].value = "other"; }, "supported track"],
   ["missing home text", (s) => { delete s.client.home.hero_line; }, "client.home.hero_line"],
+  ["missing request page", (s) => { s.client.requests = s.client.requests.filter((x) => x.value !== "av"); }, "one request page for each track"],
+  ["request path escape", (s) => { s.client.requests[0].path = "../outside.html"; }, "start-<track>.html"],
+  ["request without examples", (s) => { delete s.client.requests[1].examples; }, "client.requests[1].examples"],
+  ["next page claims delivery", (s) => { s.client.start.next.points[0].text = "Your request has been sent."; }, "cannot know"],
+  ["service without request page", (s) => { s.client.services[0].request = "nope"; }, "request page track"],
   ["missing resume edition", (s) => { s.resumes.pop(); }, "both public resume"],
 ];
 for (const [name, change, expected] of cases) {

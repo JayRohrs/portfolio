@@ -47,6 +47,7 @@ const serviceArea = () => shown(person.service_area) ? `<p>${esc(person.service_
 const SITE_URL = (process.env.SITE_URL ?? site.site_url ?? "").trim().replace(/\/+$/, "");
 const services = client.services;
 const svc = (id) => services.find((x) => x.id === id);
+const reqFor = (v) => client.requests.find((q) => q.value === v);
 const projectById = (id) => featured.find((p) => p.id === id);
 
 // ---- building blocks ------------------------------------------------------
@@ -105,7 +106,7 @@ function proofCard(p, tags = false) {
 </article>`;
 }
 
-function head({ title, description, rootPrefix, file, noindex }) {
+function head({ title, description, rootPrefix, file, noindex, ld = "" }) {
   const url = SITE_URL ? `${SITE_URL}/${file === "index.html" ? "" : file}` : "";
   const og = [
     ["og:type", "website"],
@@ -129,12 +130,31 @@ ${noindex ? '<meta name="robots" content="noindex">\n' : ""}${url && !noindex ? 
 <meta name="theme-color" content="#2a1220">
 <link rel="icon" href="${rootPrefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${rootPrefix}assets/style.css">
-${file === "index.html" ? jsonLd() : ""}</head>`;
+${file === "index.html" ? jsonLd() : ldScript(ld)}</head>`;
 }
 
-// Only approved facts from content/site.json.
+// Structured data uses only facts that are already in content/site.json:
+// name, email, city/region, the public profiles, and the service names and descriptions.
+// It never states a price, phone number, street address, opening hours or rating.
+const [CITY, REGION] = person.location.split(",").map((x) => x.trim());
+const ldScript = (data) => (data ? `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>\n` : "");
+const absUrl = (file) => (SITE_URL ? `${SITE_URL}/${file === "index.html" ? "" : file}` : "");
+const catalog = (x) => ({
+  "@type": "OfferCatalog",
+  name: x.track,
+  itemListElement: x.types.map((t) => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: t.name, description: t.text } })),
+});
+const provider = () => ({
+  "@type": "ProfessionalService",
+  name: person.name,
+  email: person.email,
+  address: { "@type": "PostalAddress", addressLocality: CITY, addressRegion: REGION },
+  areaServed: { "@type": "City", name: CITY },
+  sameAs: [person.linkedin, person.youtube],
+  ...(SITE_URL ? { url: SITE_URL + "/" } : {}),
+});
+
 function jsonLd() {
-  const [city, region] = person.location.split(",").map((x) => x.trim());
   const data = {
     "@context": "https://schema.org",
     "@graph": [
@@ -144,30 +164,60 @@ function jsonLd() {
         name: person.name,
         email: person.email,
         sameAs: [person.linkedin, person.youtube],
-        address: { "@type": "PostalAddress", addressLocality: city, addressRegion: region },
+        address: { "@type": "PostalAddress", addressLocality: CITY, addressRegion: REGION },
       },
       {
-        "@type": "ProfessionalService",
-        name: person.name,
+        ...provider(),
         description: person.statement,
-        email: person.email,
         founder: { "@id": "#jay" },
-        address: { "@type": "PostalAddress", addressLocality: city, addressRegion: region },
-        sameAs: [person.linkedin, person.youtube],
-        ...(SITE_URL ? { url: SITE_URL + "/" } : {}),
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Services",
+          itemListElement: ["it", "av"].map((id) => catalog(svc(id))),
+        },
       },
     ],
   };
-  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>\n`;
+  return ldScript(data);
 }
 
-function layout({ file, title, description, body, current, noindex, scripts = [] }) {
+// One Service per service page, plus a breadcrumb when the public address is known.
+function serviceLd(x) {
+  const crumbs = SITE_URL
+    ? {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          ["Home", "index.html"],
+          ["Services", "services.html"],
+          [x.track, x.path],
+        ].map(([name, file], i) => ({ "@type": "ListItem", position: i + 1, name, item: absUrl(file) })),
+      }
+    : null;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        name: x.title,
+        serviceType: x.track,
+        description: x.description,
+        provider: provider(),
+        areaServed: { "@type": "City", name: CITY },
+        hasOfferCatalog: catalog(x),
+        ...(SITE_URL ? { url: absUrl(x.path) } : {}),
+      },
+      ...(crumbs ? [crumbs] : []),
+    ],
+  };
+}
+
+function layout({ file, title, description, body, current, noindex, ld, scripts = [] }) {
   const rootPrefix = "../".repeat(file.split("/").length - 1);
   const nav = NAV.map(
     ([href, label]) =>
       `<li><a href="${rootPrefix}${href}"${current === href ? ' aria-current="page"' : ""}>${label}</a></li>`
   ).join("\n        ");
-  return `${head({ title, description, rootPrefix, file, noindex })}
+  return `${head({ title, description, rootPrefix, file, noindex, ld })}
 <body>
 <a class="skip" href="#main">Skip to main content</a>
 <header class="site-header">
@@ -208,7 +258,7 @@ ${scripts.map((x) => `<script src="${rootPrefix}assets/${x}" defer></script>`).j
 `;
 }
 
-const page = (file, opts) => ({ file, html: layout({ file, ...opts }) });
+const page = (file, opts) => ({ file, noindex: Boolean(opts.noindex), html: layout({ file, ...opts }) });
 
 // ---- pages ----------------------------------------------------------------
 const pages = [];
@@ -262,6 +312,7 @@ function trackCard(x, r) {
     ${x.types.slice(0, 3).map((t) => `<li>${esc(t.name)}</li>`).join("\n    ")}
   </ul>
   <p class="card-link"><a class="btn btn-primary" href="${r}${x.path}">See ${esc(x.track)} services</a></p>
+  <p class="card-link"><a class="btn btn-text" href="${r}${reqFor(x.request).path}">Request ${esc(x.track)} help<span class="sr"> (opens the request page)</span></a></p>
 </article>`;
 }
 
@@ -566,6 +617,17 @@ function proofLink(x, r) {
   return `<a href="${r}downloads/${x.file}">${esc(x.label)}</a>`;
 }
 
+const firstSteps = (q, r, id, level = "h2") => `<section class="section" id="${id}">
+  <div class="wrap">
+    <${level}>${esc(q.examples_heading)}</${level}>
+    <p class="narrow-text">${esc(client.start.examples_intro)}</p>
+    <ul class="service-list">
+      ${q.examples.map((e) => `<li><h3>${esc(e.name)}</h3><p>${esc(e.text)}</p></li>`).join("\n      ")}
+    </ul>
+    <p><span class="label">Price</span> ${esc(client.pricing)}.</p>
+  </div>
+</section>`;
+
 const howItWorks = () => `<section class="section tint" id="how">
   <div class="wrap">
     <h2>How it works</h2>
@@ -614,8 +676,9 @@ for (const x of services) {
   pages.push(
     page(x.path, {
       current: "services.html",
-      title: `${x.title} — ${person.name}`,
+      title: `${x.seo_title || x.title} — ${person.name}`,
       description: x.description,
+      ld: serviceLd(x),
       body: (r) => `
 <section class="page-head">
   <div class="wrap">
@@ -623,7 +686,7 @@ for (const x of services) {
     <p class="eyebrow">${esc(x.track)}</p>
     <h1>${esc(x.title)}</h1>
     <p class="lede">${esc(x.tagline)}</p>
-    <p class="actions"><a class="btn btn-primary" href="${r}start.html">Start a project</a></p>
+    <p class="actions"><a class="btn btn-primary" href="${r}${reqFor(x.request).path}">${x.id === "ai" ? "Start a project" : `Request ${esc(x.track)} help`}</a></p>
   </div>
 </section>
 <section class="section">
@@ -650,10 +713,11 @@ for (const x of services) {
       <p>${esc(x.first_step)}</p>
       ${serviceArea()}
       <p><span class="label">Price</span><br>${esc(client.pricing)}</p>
-      <p><a class="btn btn-primary" href="${r}start.html">Start a project</a></p>
+      <p><a class="btn btn-primary" href="${r}${reqFor(x.request).path}">${x.id === "ai" ? "Start a project" : `Request ${esc(x.track)} help`}</a></p>
     </aside>
   </div>
 </section>
+${x.id === "ai" ? "" : firstSteps(reqFor(x.request), r, "first-steps")}
 ${howItWorks()}
 <section class="section" id="proof">
   <div class="wrap narrow">
@@ -671,22 +735,14 @@ ${howItWorks()}
 // ---- start a project ----------------------------------------------------------
 const st = client.start;
 const err = (k) => `<p class="field-error" id="err-${k}" hidden></p>`;
-pages.push(
-  page("start.html", {
-    current: "start.html",
-    title: `${st.title} — ${person.name}`,
-    description: st.description,
-    scripts: ["intake.js", "start.js"],
-    body: () => `
-<section class="page-head">
+const NEXT = st.next;
+
+// The one request form, used on the chooser page and on each track page.
+// `preselect` ticks that track's radio button; everything else is identical,
+// so Intake.toJSON / toText / toMailto behave the same everywhere.
+const startForm = (preselect, r) => `<section class="section" id="request">
   <div class="wrap narrow">
-    <h1>${esc(st.title)}</h1>
-    <p class="lede">${esc(st.intro)}</p>
-    <p>You can also email <a href="${mailto}">${esc(person.email)}</a> directly.</p>
-  </div>
-</section>
-<section class="section">
-  <div class="wrap narrow">
+    <h2>${esc(st.form_heading)}</h2>
     <p id="no-js-note" class="notice">This form needs JavaScript to build your email. Without it, please write to <a href="${mailto}">${esc(person.email)}</a> and tell me which kind of help you need (IT &amp; Systems, AV &amp; Media Production, both, or not sure), what you need, and your timeline.</p>
     <form id="start-form" class="form" data-to="${esc(person.email)}" novalidate hidden>
       <div id="form-errors" class="form-errors" role="alert" tabindex="-1" hidden></div>
@@ -712,8 +768,8 @@ pages.push(
         <legend>What kind of help? <span class="req">(required)</span></legend>
         ${st.tracks
           .map(
-            (t, i) =>
-              `<div class="choice"><input id="track-${t.value}" type="radio" name="track" value="${t.value}"><label for="track-${t.value}">${esc(t.label)}</label></div>`
+            (t) =>
+              `<div class="choice"><input id="track-${t.value}" type="radio" name="track" value="${t.value}"${t.value === preselect ? " checked" : ""}><label for="track-${t.value}">${esc(t.label)}</label></div>`
           )
           .join("\n        ")}
         ${err("track")}
@@ -750,8 +806,106 @@ pages.push(
         <label for="request-preview">Your request, as it will appear in the email</label>
         <textarea id="request-preview" rows="12" readonly></textarea>
       </div>
-      <p class="fine">This page does not send, store or track anything. Your message goes only where you send it from your own email program.</p>
+      <p class="fine">This page does not send, store or track anything. Your message goes only where you send it from your own email program. Read <a href="${r}${NEXT.path}">${esc(NEXT.link_text)}</a>.</p>
     </form>
+  </div>
+</section>`;
+
+// Chooser page: pick a track (each has its own request page), or use the form directly.
+pages.push(
+  page("start.html", {
+    current: "start.html",
+    title: `${st.title} — ${person.name}`,
+    description: st.description,
+    scripts: ["intake.js", "start.js"],
+    body: (r) => `
+<section class="page-head">
+  <div class="wrap narrow">
+    <h1>${esc(st.title)}</h1>
+    <p class="lede">${esc(st.intro)}</p>
+    <p>You can also email <a href="${mailto}">${esc(person.email)}</a> directly.</p>
+  </div>
+</section>
+<section class="section" id="choose">
+  <div class="wrap">
+    <h2>${esc(st.choose_heading)}</h2>
+    <p class="narrow-text">${esc(st.choose_intro)}</p>
+    <div class="tracks tracks-four">
+      ${client.requests
+        .map(
+          (q) => `<article class="track">
+        <h3><a href="${r}${q.path}">${esc(st.tracks.find((t) => t.value === q.value).label)}</a></h3>
+        <p>${esc(q.lede)}</p>
+        <p class="card-link"><a class="btn btn-primary" href="${r}${q.path}">${esc(q.title)}</a></p>
+      </article>`
+        )
+        .join("\n      ")}
+    </div>
+  </div>
+</section>
+${howItWorks()}
+${startForm("", r)}`,
+  })
+);
+
+// One request page per track: examples of a small first step, how it works, then the form.
+for (const q of client.requests) {
+  const label = st.tracks.find((t) => t.value === q.value).label;
+  pages.push(
+    page(q.path, {
+      current: "start.html",
+      title: `${q.title} — ${person.name}`,
+      description: q.description,
+      scripts: ["intake.js", "start.js"],
+      ld: SITE_URL
+        ? {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              ["Home", "index.html"],
+              [st.title, "start.html"],
+              [label, q.path],
+            ].map(([name, file], i) => ({ "@type": "ListItem", position: i + 1, name, item: absUrl(file) })),
+          }
+        : "",
+      body: (r) => `
+<section class="page-head">
+  <div class="wrap narrow">
+    <p class="crumb"><a href="${r}start.html">← All request types</a></p>
+    <p class="eyebrow">${esc(label)}</p>
+    <h1>${esc(q.title)}</h1>
+    <p class="lede">${esc(q.lede)}</p>
+    <p class="actions"><a class="btn btn-primary" href="#request">Go to the request form</a></p>
+  </div>
+</section>
+${firstSteps(q, r, "first-steps")}
+${howItWorks()}
+${startForm(q.value, r)}`,
+    })
+  );
+}
+
+// Static "what to expect" page. It never says a request was sent: the site cannot know.
+const nextText = (t) => esc(t).replaceAll("{email}", `<a href="${mailto}">${esc(person.email)}</a>`);
+pages.push(
+  page(NEXT.path, {
+    title: `${NEXT.title} — ${person.name}`,
+    description: NEXT.description,
+    noindex: true,
+    body: (r) => `
+<section class="page-head">
+  <div class="wrap narrow">
+    <h1>${esc(NEXT.title)}</h1>
+    <p class="lede">${esc(NEXT.intro)}</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap narrow">
+    <ul class="service-list">
+      ${NEXT.points.map((x) => `<li><h2 class="h3">${esc(x.heading)}</h2><p>${nextText(x.text)}</p></li>`).join("\n      ")}
+    </ul>
+    <p>${ext(person.linkedin, "Jay Rohrs on LinkedIn")}</p>
+    <p class="actions"><a class="btn btn-primary" href="${r}start.html">Back to Start a project</a> <a class="btn btn-secondary" href="${r}index.html">Home</a></p>
   </div>
 </section>`,
   })
@@ -783,7 +937,7 @@ pages.push(
   })
 );
 
-const indexable = pages.filter((p) => p.file.endsWith(".html") && p.file !== "404.html");
+const indexable = pages.filter((p) => p.file.endsWith(".html") && p.file !== "404.html" && !p.noindex);
 pages.push({
   file: "robots.txt",
   html: `User-agent: *\nAllow: /\n${SITE_URL ? `\nSitemap: ${SITE_URL}/sitemap.xml\n` : ""}`,

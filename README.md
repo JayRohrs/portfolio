@@ -22,6 +22,7 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 
 ## Client site additions
 - Menu: Services · Work · About · Résumés · Start a project. IT & Systems and AV & Production are separate services pages, with a short "AI where they meet" page.
-- `start.html` is a static request form that opens the visitor's own email program (no backend). See `docs/ORDER_INTAKE.md`.
+- `start.html` chooses a request type; `start-it.html`, `start-av.html`, `start-both.html` and `start-not-sure.html` each give examples of a small first step and the request form (opens the visitor's own email program, no backend). `start-next.html` is an honest "what to expect" page. See `docs/ORDER_INTAKE.md`.
+- Services pages carry a `Service` structured-data block built only from `content/site.json`; `sitemap.xml` lists every indexable page.
 - `node scripts/check.mjs` checks every page (titles, headings, links, placeholders, emails, the form's mailto). `node scripts/contrast.mjs` prints measured colour contrast.
 - Open questions for Jay: `docs/NEEDS_JAY.md`.

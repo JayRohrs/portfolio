@@ -95,6 +95,31 @@ export function validateSite(site) {
         }
       }
       for (const key of ["timelines", "budgets"]) strings(site.client.start[key], `client.start.${key}`);
+      for (const key of ["choose_heading", "choose_intro", "form_heading", "examples_intro"]) required(site.client.start[key], `client.start.${key}`, "string");
+      const next = site.client.start.next;
+      if (required(next, "client.start.next", "object")) {
+        for (const key of ["path", "link_text", "title", "description", "intro"]) required(next[key], `client.start.next.${key}`, "string");
+        if (next.path !== "start-next.html") bad("client.start.next.path", "must be start-next.html");
+        records(next.points, "client.start.next.points", ["heading", "text"]);
+        if (Array.isArray(next.points)) next.points.forEach((point, i) => {
+          if (object(point) && /\b(?:has|have|was|were) been sent\b|\bsuccessfully sent\b|\bwe (?:got|received) your\b/i.test(point.text)) {
+            bad(`client.start.next.points[${i}].text`, "must not claim that a request was sent or received: the site cannot know");
+          }
+        });
+      }
+    }
+    records(site.client.requests, "client.requests", ["value", "path", "title", "description", "lede", "examples_heading"]);
+    if (Array.isArray(site.client.requests)) {
+      const values = site.client.requests.map((request) => request?.value);
+      const expected = ["it", "av", "both", "not-sure"];
+      if (values.length !== expected.length || expected.some((value) => !values.includes(value))) {
+        bad("client.requests", "must contain one request page for each track: it, av, both, not-sure");
+      }
+      site.client.requests.forEach((request, i) => {
+        if (!object(request)) return;
+        if (request.path !== `start-${request.value}.html`) bad(`client.requests[${i}].path`, "must be start-<track>.html for its track");
+        records(request.examples, `client.requests[${i}].examples`, ["name", "text"]);
+      });
     }
     required(site.client.services, "client.services", "array");
     if (Array.isArray(site.client.services)) {
@@ -113,6 +138,8 @@ export function validateSite(site) {
           strings(service.ideas, `${at}.ideas`);
           for (const key of ["ideas_heading", "ideas_intro"]) required(service[key], `${at}.${key}`, "string");
         }
+        if (service.seo_title !== undefined) required(service.seo_title, `${at}.seo_title`, "string");
+        if (!["it", "av", "both", "not-sure"].includes(service.request)) bad(`${at}.request`, "must name the request page track: it, av, both or not-sure");
         if (service.other_track && !["it", "av", "ai"].includes(service.other_track)) bad(`${at}.other_track`, "must reference an existing service");
         records(service.proof, `${at}.proof`, ["label"]);
         if (Array.isArray(service.proof)) service.proof.forEach((proof, j) => {

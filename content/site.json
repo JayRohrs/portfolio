@@ -381,7 +381,9 @@
             "file": "Jay_Rohrs_IT_Resume_V4.9_Public_Final.pdf"
           }
         ],
-        "other_track": "av"
+        "other_track": "av",
+        "seo_title": "IT & Systems Support for Small Business in Denver",
+        "request": "it"
       },
       {
         "id": "av",
@@ -424,7 +426,9 @@
             "project": "music-performance"
           }
         ],
-        "other_track": "it"
+        "other_track": "it",
+        "seo_title": "AV & Livestream Production in Denver",
+        "request": "av"
       },
       {
         "id": "ai",
@@ -462,7 +466,8 @@
             "project": "art-of-war"
           }
         ],
-        "other_track": null
+        "other_track": null,
+        "request": "both"
       }
     ],
     "start": {
@@ -499,8 +504,139 @@
         "$5,000 to $15,000",
         "More than $15,000",
         "Not sure yet"
-      ]
-    }
+      ],
+      "choose_heading": "Choose the kind of help you need",
+      "choose_intro": "Each page shows what a small first step can look like and has the same request form. If you cannot tell which one fits, choose “Not sure yet”.",
+      "form_heading": "Your request",
+      "examples_intro": "These show the size of job I mean by a small first step. Yours may look different: we agree it together after the first conversation.",
+      "next": {
+        "path": "start-next.html",
+        "link_text": "what to expect after you press Send",
+        "title": "After you send your request",
+        "description": "What to do after your email program opens with your project request to Jay Rohrs, and what to do if nothing opened.",
+        "intro": "This page is a short guide. It cannot see your email program, so it cannot tell you whether your message was sent.",
+        "points": [
+          {
+            "heading": "If your email program opened",
+            "text": "Read the message, change anything you like, and press Send there. Afterwards, look in your Sent folder to check it went."
+          },
+          {
+            "heading": "If nothing opened",
+            "text": "Go back to the form and choose “Copy request text”, then paste it into an email to {email}. Some phones and computers have no email program set up, and very long requests can be too big for the link."
+          },
+          {
+            "heading": "If you do not hear back",
+            "text": "Write to {email} again, or send a message on LinkedIn. Messages can end up in spam folders on either side."
+          },
+          {
+            "heading": "What happens next",
+            "text": "When we are in touch, we have a short conversation about what you need and what is getting in the way. If it is a fit, we agree one small, clearly scoped first step. The price is a quote on request."
+          }
+        ]
+      }
+    },
+    "requests": [
+      {
+        "value": "it",
+        "path": "start-it.html",
+        "title": "Request IT & Systems help",
+        "description": "Ask Jay Rohrs for Microsoft 365, email security, everyday tech support or routine system checks. See what a small first step looks like, then start a request.",
+        "lede": "Tell me what is slowing you down: an account problem, a mail problem, a system only one person understands. Start with a short conversation and one small job.",
+        "examples_heading": "What a small first step can look like",
+        "examples": [
+          {
+            "name": "Tidy up user accounts",
+            "text": "Look at who has an account, a licence and access to what, and clean it up."
+          },
+          {
+            "name": "Check sign-in security",
+            "text": "Look at how people sign in, and roll out multi-factor sign-in across a team."
+          },
+          {
+            "name": "Trace a phishing or spam problem",
+            "text": "Find out what is going on with the mail, and sort it out."
+          },
+          {
+            "name": "Get a new person started, or remove access when someone leaves",
+            "text": "Set up their accounts and equipment, or remove their access."
+          },
+          {
+            "name": "Write down a system only one person understands",
+            "text": "A plain, step-by-step guide so the next person can pick it up."
+          }
+        ]
+      },
+      {
+        "value": "av",
+        "path": "start-av.html",
+        "title": "Request AV & Media Production",
+        "description": "Ask Jay Rohrs about a livestream, hybrid event, interview shoot or video edit in Denver. See what a small first step looks like, then start a request.",
+        "lede": "Tell me about the event or the story: something to stream, to film, or to finish and publish. Start with a short conversation and one small job.",
+        "examples_heading": "What a small first step can look like",
+        "examples": [
+          {
+            "name": "Livestream one event",
+            "text": "Multi-camera coverage of a single service or event, with graphics and remote participants if you need them."
+          },
+          {
+            "name": "Edit one short video",
+            "text": "Finish and publish a video you already have footage for."
+          },
+          {
+            "name": "Film one interview",
+            "text": "Camera and audio on location for a single interview or short story."
+          },
+          {
+            "name": "Cover one event, with notes afterwards",
+            "text": "Written notes and a debrief after the event, so the setup keeps getting smoother."
+          }
+        ]
+      },
+      {
+        "value": "both",
+        "path": "start-both.html",
+        "title": "Request IT and AV help together",
+        "description": "Need both technology help and media production? Ask Jay Rohrs about one small first step that covers both, then start a request.",
+        "lede": "Some jobs need both kinds of work. The two services stay separate, so we can start with whichever matters most and add the other when you are ready.",
+        "examples_heading": "What a small first step can look like",
+        "examples": [
+          {
+            "name": "Stream one event and write the setup down",
+            "text": "Livestream a single event, and leave a plain written guide so the next person can run it."
+          },
+          {
+            "name": "Put a how-to on paper and on video",
+            "text": "A written guide to a system or process, plus a short video of the same steps."
+          },
+          {
+            "name": "Start with one, then the other",
+            "text": "Pick the most pressing job from either service and do that first."
+          }
+        ]
+      },
+      {
+        "value": "not-sure",
+        "path": "start-not-sure.html",
+        "title": "Not sure what you need? Start here",
+        "description": "Not sure whether you need IT help, AV and media production or both? Describe the problem to Jay Rohrs in your own words and get pointed the right way.",
+        "lede": "You do not need technical words. Tell me what you are trying to get done, and I will point you the right way.",
+        "examples_heading": "What you can tell me",
+        "examples": [
+          {
+            "name": "What is slowing you down",
+            "text": "Something broken, confusing or repeated every week."
+          },
+          {
+            "name": "The story or event",
+            "text": "What you want recorded, streamed or finished, and who it is for."
+          },
+          {
+            "name": "Your timing",
+            "text": "A date, or no date at all."
+          }
+        ]
+      }
+    ]
   },
   "library": []
 }

@@ -248,6 +248,9 @@ nav { order: 3; width: 100%; }
 .track:nth-child(2) .ticks li::before { background: #d99ab2; }
 .track .card-link { margin-top: auto; }
 @media (min-width: 48rem) { .tracks { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+.tracks-four .track:nth-child(3) { border-top-color: var(--accent-lilac); }
+.tracks-four .track:nth-child(4) { border-top-color: #8f7a9c; }
+.tracks-four .track p:not(.card-link) { margin-top: 0; }
 
 .steps { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: 1fr; }
 .steps li { counter-increment: step; border-top: 6px solid var(--accent-berry); background: #fff; padding: 1rem 1.25rem; border-radius: 0 0 6px 6px; }

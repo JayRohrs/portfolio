@@ -14,6 +14,8 @@ This is Jay Rohrs's public portfolio and client-intake site. It is a plain stati
 - No phone number, analytics, tracking, cookies, autoplay audio, third-party form service, or any outside link that is not in `content/site.json`.
 - Videos load only on click (youtube-nocookie). The headshot appears only in About areas.
 - The repo is public: no private career, client, church-governance, employer or financial details, no customer data, no keys or tokens, and never name the private subdomain or private systems. `docs/` describes a private admin system only as "a private admin system".
+- The site never says a request was sent or received (it cannot know). `scripts/check.mjs` enforces this on every page.
+- Structured data may only use facts in `content/site.json`: no price, phone, street address, hours or ratings.
 - Keep the two tracks (IT & Systems, AV & Production) separate on every page.
 - Keep the look: near-black plum sections with blue / berry / lilac accents, serif headings, 390 px friendly, 44 px tap targets, text never shrunk to fit, contrast at least 4.5:1 (`node scripts/contrast.mjs`).
 

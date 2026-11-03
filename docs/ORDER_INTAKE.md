@@ -10,6 +10,12 @@ The "Start a project" page (`start.html`) is a static form. There is no backend 
 
 Limits: very long requests can exceed what some email programs accept in a `mailto:` link. The copy button is the fallback.
 
+## Pages
+- `start.html` is the chooser: four cards (IT & Systems, AV & Media Production, Both, Not sure yet), a short "How it works", and the form.
+- `start-it.html`, `start-av.html`, `start-both.html`, `start-not-sure.html` each show plain-language examples of a small first step, "How it works", and the same form with that track already ticked. The text comes from `client.requests` in `content/site.json`.
+- `start-next.html` ("After you send your request") is a static page, linked from the form's footnote. It says what to do if the email program opened, if nothing opened, and if there is no reply. It never says a request was sent, because the site cannot know; the checker fails the build if any page says so. It is `noindex` and not in the sitemap.
+- The form, `Intake.toJSON` (version 1), the `mailto:` link and Copy request text are identical on all five pages.
+
 ## Request shape (JSON)
 `Intake.toJSON(fields)` returns this object. The site itself does not send it anywhere; it exists so a later system can use the same shape.
 
