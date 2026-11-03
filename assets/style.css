@@ -232,7 +232,11 @@ nav[aria-label="Main"] { order: 3; width: 100%; margin: 0 calc(var(--s3) * -1); 
 /* Phone: no line pattern behind running text */
 @media (max-width: 59.99rem) { .hero, .page-head, .contact-band { background-image: none, radial-gradient(60rem 28rem at 88% -10%, rgba(77, 114, 173, .38), transparent 62%), radial-gradient(44rem 26rem at -12% 115%, rgba(164, 73, 105, .34), transparent 62%), linear-gradient(165deg, var(--od-bg) 0%, var(--od-bg-deep) 78%); } }
 .hero-grid { display: grid; gap: 2.25rem; align-items: center; }
-.hero h1 { font-size: clamp(2.2rem, 1.3rem + 3.4vw, 3.7rem); line-height: 1.08; margin-bottom: .45em; max-width: 17ch; }
+.hero h1 { font-size: clamp(2.8rem, 1.6rem + 4.6vw, 4.75rem); line-height: 1; letter-spacing: -.02em; margin-bottom: .3em; }
+.hero-line { font-family: var(--serif); font-size: clamp(1.45rem, 1.1rem + 1.4vw, 2.1rem); line-height: 1.2; color: var(--od-figure); margin-bottom: .8em; }
+.hero-line span { display: block; }
+.about-pitch { font-size: var(--fs-lede); line-height: 1.55; color: var(--heading); border-left: 4px solid var(--berry); padding-left: 1rem; }
+.about-pitch .btn-text { display: inline-flex; min-height: 44px; font-size: 1.05rem; }
 .statement { font-size: var(--fs-lede); line-height: 1.55; max-width: 34rem; color: var(--text); }
 .hero .actions { margin: 1.75rem 0 1.25rem; }
 .hero-meta { font-size: var(--fs-small); color: var(--muted); max-width: 30rem; margin: 0; }

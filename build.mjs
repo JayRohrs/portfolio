@@ -348,6 +348,12 @@ function trackCard(x, r) {
 const TRACK_ORDER = ["av", "it"];
 const reelProjects = featured.filter((p) => altThumb(p)).slice(0, 4);
 
+// Break the hero line after its first comma, so each half stays on its own line.
+function heroLine(t) {
+  const i = t.indexOf(", ");
+  return i < 0 ? esc(t) : `<span>${esc(t.slice(0, i + 1))}</span> <span>${esc(t.slice(i + 2))}</span>`;
+}
+
 function reel(r) {
   return `<ul class="reel" aria-label="Project previews">
       ${reelProjects
@@ -367,8 +373,9 @@ pages.push(
 <section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <p class="eyebrow">${esc(person.name)} · ${esc(person.location)}</p>
-      <h1 id="hero-h">${esc(client.home.hero_line)}</h1>
+      <p class="eyebrow">${esc(person.location)}</p>
+      <h1 id="hero-h">${esc(person.name)}</h1>
+      <p class="hero-line">${heroLine(client.home.hero_line)}</p>
       <p class="statement">${esc(person.statement)}</p>
       <div class="actions">
         <a class="btn btn-primary btn-lg" href="${r}start.html">Start a project</a>
@@ -433,8 +440,9 @@ ${howItWorks()}
   <div class="wrap about-grid">
     <img class="headshot" src="${r}assets/images/headshot.jpg" alt="Portrait of ${esc(person.name)}" width="720" height="900" loading="lazy" decoding="async">
     <div>
-      <p class="eyebrow">About</p>
-      <h2 id="about-h">Hello, I'm ${esc(person.name.split(" ")[0])}</h2>
+      <p class="eyebrow">About ${esc(person.name.split(" ")[0])}</p>
+      <h2 id="about-h">${esc(client.home.about_heading)}</h2>
+      <p class="about-pitch">${esc(client.home.about_text)} <a class="btn btn-text" href="${r}start.html">${esc(client.home.about_link)}</a></p>
       ${aboutParagraphs()}
       <div class="now">
         <h3>Right now</h3>
