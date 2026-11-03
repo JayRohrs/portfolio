@@ -13,6 +13,7 @@
 <meta property="og:url" content="https://www.jbase.app/start.html">
 <meta name="twitter:card" content="summary">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#2a1220">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css">
@@ -48,22 +49,22 @@
     <h2>Choose the kind of help you need</h2>
     <p class="narrow-text">Each page shows what a small first step can look like and has the same request form. If you cannot tell which one fits, choose “Not sure yet”.</p>
     <div class="tracks tracks-four">
-      <article class="track">
+      <article class="track" data-track="it">
         <h3><a href="start-it.html">IT &amp; Systems</a></h3>
         <p>Tell me what is slowing you down: an account problem, a mail problem, a system only one person understands. Start with a short conversation and one small job.</p>
         <p class="card-link"><a class="btn btn-primary" href="start-it.html">Request IT &amp; Systems help</a></p>
       </article>
-      <article class="track">
+      <article class="track" data-track="av">
         <h3><a href="start-av.html">AV &amp; Media Production</a></h3>
         <p>Tell me about the event or the story: something to stream, to film, or to finish and publish. Start with a short conversation and one small job.</p>
         <p class="card-link"><a class="btn btn-primary" href="start-av.html">Request AV &amp; Media Production</a></p>
       </article>
-      <article class="track">
+      <article class="track" data-track="both">
         <h3><a href="start-both.html">Both</a></h3>
         <p>Some jobs need both kinds of work. The two services stay separate, so we can start with whichever matters most and add the other when you are ready.</p>
         <p class="card-link"><a class="btn btn-primary" href="start-both.html">Request IT and AV help together</a></p>
       </article>
-      <article class="track">
+      <article class="track" data-track="not-sure">
         <h3><a href="start-not-sure.html">Not sure yet</a></h3>
         <p>You do not need technical words. Tell me what you are trying to get done, and I will point you the right way.</p>
         <p class="card-link"><a class="btn btn-primary" href="start-not-sure.html">Not sure what you need? Start here</a></p>
@@ -73,6 +74,7 @@
 </section>
 <section class="section tint" id="how">
   <div class="wrap">
+    <p class="eyebrow">The process</p>
     <h2>How it works</h2>
     <ol class="steps">
       <li><h3>Talk</h3><p>We have a short conversation about what you need and what is getting in the way.</p></li>
@@ -161,17 +163,29 @@
 <footer class="site-footer">
   <div class="rule" aria-hidden="true"></div>
   <div class="wrap footer-row">
-    <div>
+    <div class="footer-brand">
       <p class="footer-name">Jay Rohrs</p>
       <p>Denver, Colorado</p>
+      <p>Denver and remote; travel by arrangement</p>
       <p><a class="btn btn-accent" href="start.html">Start a project</a></p>
     </div>
-    <ul class="footer-links">
-      <li><a href="services.html">Services</a></li>
-      <li><a href="mailto:jayrohrs@gmail.com">jayrohrs@gmail.com</a></li>
-      <li><a href="https://www.linkedin.com/in/jay-rohrs" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr"> (opens in a new tab)</span></a></li>
-      <li><a href="https://www.youtube.com/@JCliche/videos" target="_blank" rel="noopener noreferrer">YouTube<span class="sr"> (opens in a new tab)</span></a></li>
-    </ul>
+    <nav class="footer-col" aria-label="Footer">
+      <p class="footer-h">Site</p>
+      <ul class="footer-links">
+        <li><a href="services.html">Services</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resume.html">Résumés</a></li>
+      </ul>
+    </nav>
+    <div class="footer-col">
+      <p class="footer-h">Contact</p>
+      <ul class="footer-links">
+        <li><a href="mailto:jayrohrs@gmail.com">jayrohrs@gmail.com</a></li>
+        <li><a href="https://www.linkedin.com/in/jay-rohrs" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.youtube.com/@JCliche/videos" target="_blank" rel="noopener noreferrer">YouTube<span class="sr"> (opens in a new tab)</span></a></li>
+      </ul>
+    </div>
   </div>
 </footer>
 <script src="assets/site.js" defer></script>

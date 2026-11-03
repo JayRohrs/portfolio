@@ -63,6 +63,13 @@ function thumbMarkup(p, rootPrefix, priority = false) {
     : `<span class="ph" aria-hidden="true"></span>`;
 }
 
+// A different still from the same project where one exists, so the hero reel
+// does not repeat the card images further down the page.
+function altThumb(p) {
+  const ids = (p.videos || []).map((v) => ytId(v.url)).filter((id) => thumbFor(id));
+  return thumbFor(ids[1] || ids[0]);
+}
+
 function video(v, rootPrefix) {
   const id = ytId(v.url);
   const t = thumbFor(id);
@@ -78,29 +85,31 @@ function video(v, rootPrefix) {
 </figure>`;
 }
 
-function featuredCard(p, rootPrefix, tags = false) {
+function featuredCard(p, rootPrefix, tags = false, lead = false) {
   const tagAttr = tags ? ` data-tags="${esc(p.tags.map(slug).join(" "))}"` : "";
-  return `<article class="card"${tagAttr}>
-  <a class="card-media video-frame" href="${rootPrefix}projects/${p.id}.html" tabindex="-1" aria-hidden="true">${thumbMarkup(p, rootPrefix)}</a>
+  return `<article class="card${lead ? " card-lead" : ""}"${tagAttr}>
+  <a class="card-media video-frame" href="${rootPrefix}projects/${p.id}.html" tabindex="-1" aria-hidden="true">${thumbMarkup(p, rootPrefix)}<span class="media-badge">${p.videos.length} ${p.videos.length === 1 ? "video" : "videos"}</span></a>
   <div class="card-body">
     <p class="eyebrow">${esc(p.type)}</p>
     <h3><a href="${rootPrefix}projects/${p.id}.html">${esc(p.title)}</a></h3>
     <p class="role"><span class="label">Role</span> ${esc(p.role)}</p>
-    <p>${esc(p.why)}</p>
+    <p class="why">${esc(p.why)}</p>
     <p class="card-link"><a class="btn btn-text" href="${rootPrefix}projects/${p.id}.html">View case study<span class="sr"> — ${esc(p.title)}</span></a></p>
   </div>
 </article>`;
 }
 
-function proofCard(p, tags = false) {
+function proofCard(p, rootPrefix, tags = false) {
   const tagAttr = tags ? ` data-tags="${esc(p.tags.map(slug).join(" "))}"` : "";
   const label = p.url.includes("/@") ? "Visit the YouTube channel" : "Watch on YouTube";
-  return `<article class="card card-small"${tagAttr}>
+  const t = thumbFor(ytId(p.url));
+  return `<article class="card card-small${t ? " has-media" : ""}"${tagAttr}>
+  ${t ? `<span class="card-media video-frame"><img src="${rootPrefix}${t}" alt="" width="480" height="360" loading="lazy" decoding="async"></span>` : ""}
   <div class="card-body">
-    <p class="eyebrow">Additional proof</p>
+    <p class="eyebrow">Additional proof${p.published ? ` · ${esc(p.published)}` : ""}</p>
     <h3>${esc(p.title)}</h3>
     <p class="role"><span class="label">Role</span> ${esc(p.role)}</p>
-    <p>${esc(p.why)}</p>
+    <p class="why">${esc(p.why)}</p>
     <p class="card-link">${ext(p.url, `${label}<span class="sr">: ${esc(p.title)}</span>`).replace('<a ', '<a class="btn btn-text" ')}</p>
   </div>
 </article>`;
@@ -127,6 +136,7 @@ function head({ title, description, rootPrefix, file, noindex, ld = "" }) {
 ${noindex ? '<meta name="robots" content="noindex">\n' : ""}${url && !noindex ? `<link rel="canonical" href="${esc(url)}">\n` : ""}${og}
 <meta name="twitter:card" content="summary">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
+<meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#2a1220">
 <link rel="icon" href="${rootPrefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${rootPrefix}assets/style.css">
@@ -238,17 +248,26 @@ ${body(rootPrefix)}
 <footer class="site-footer">
   <div class="rule" aria-hidden="true"></div>
   <div class="wrap footer-row">
-    <div>
+    <div class="footer-brand">
       <p class="footer-name">Jay Rohrs</p>
       <p>${esc(person.location)}</p>
+      ${serviceArea()}
       <p><a class="btn btn-accent" href="${rootPrefix}start.html">Start a project</a></p>
     </div>
-    <ul class="footer-links">
-      <li><a href="${rootPrefix}services.html">Services</a></li>
-      <li><a href="${mailto}">${esc(person.email)}</a></li>
-      <li>${ext(person.linkedin, "LinkedIn")}</li>
-      <li>${ext(person.youtube, "YouTube")}</li>
-    </ul>
+    <nav class="footer-col" aria-label="Footer">
+      <p class="footer-h">Site</p>
+      <ul class="footer-links">
+        ${NAV.map(([href, label]) => `<li><a href="${rootPrefix}${href}">${label}</a></li>`).join("\n        ")}
+      </ul>
+    </nav>
+    <div class="footer-col">
+      <p class="footer-h">Contact</p>
+      <ul class="footer-links">
+        <li><a href="${mailto}">${esc(person.email)}</a></li>
+        <li>${ext(person.linkedin, "LinkedIn")}</li>
+        <li>${ext(person.youtube, "YouTube")}</li>
+      </ul>
+    </div>
   </div>
 </footer>
 <script src="${rootPrefix}assets/site.js" defer></script>
@@ -302,11 +321,20 @@ function wall(r, heading, intro, level = "h2") {
 </section>`;
 }
 
+// Small line icons for the two tracks (decorative; the heading carries the meaning).
+const ICONS = {
+  av: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><rect x="2.5" y="6" width="13" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M15.5 10.5 21.5 7v10l-6-3.5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+  it: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="10" r="1.4" fill="currentColor"/><circle cx="15.5" cy="10" r="1.4" fill="currentColor"/><path d="M9.9 10h4.2" stroke="currentColor" stroke-width="1.4"/></svg>`,
+};
+
 function trackCard(x, r) {
-  return `<article class="track">
-  <p class="eyebrow">${esc(x.track)}</p>
+  return `<article class="track" data-track="${esc(x.id)}">
+  <div class="track-top">
+    <span class="track-icon">${ICONS[x.id] || ""}</span>
+    <p class="eyebrow">${esc(x.track)}</p>
+  </div>
   <h3><a href="${r}${x.path}">${esc(x.title)}</a></h3>
-  <p>${esc(x.tagline)}</p>
+  <p class="tagline">${esc(x.tagline)}</p>
   <p class="who">${esc(x.who_for)}</p>
   <ul class="ticks">
     ${x.types.slice(0, 3).map((t) => `<li>${esc(t.name)}</li>`).join("\n    ")}
@@ -316,108 +344,126 @@ function trackCard(x, r) {
 </article>`;
 }
 
+// AV first: it is the track the video previews on the home page belong to.
+const TRACK_ORDER = ["av", "it"];
+const reelProjects = featured.filter((p) => altThumb(p)).slice(0, 4);
+
+function reel(r) {
+  return `<ul class="reel" aria-label="Project previews">
+      ${reelProjects
+        .map(
+          (p, i) => `<li${i === 0 ? ' class="reel-lead"' : ""}><a href="${r}projects/${p.id}.html"><span class="video-frame"><img src="${r}${altThumb(p)}" alt="" width="480" height="360"${i === 0 ? "" : ' loading="lazy"'} decoding="async"></span><span class="reel-cap">${esc(p.title)}<span class="sr">. View case study</span></span></a></li>`
+        )
+        .join("\n      ")}
+    </ul>`;
+}
+
 pages.push(
   page("index.html", {
     current: "index.html",
     title: `${person.name} — IT & Systems and AV & Media Production in Denver`,
     description: `${client.home.hero_line} IT and systems help, and AV and media production, for small businesses, churches and nonprofits. ${person.location}.`,
     body: (r) => `
-<section class="hero">
+<section class="hero" aria-labelledby="hero-h">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <h1>${esc(person.name)}</h1>
-      <p class="headline">${esc(client.home.hero_line)}</p>
+      <p class="eyebrow">${esc(person.name)} · ${esc(person.location)}</p>
+      <h1 id="hero-h">${esc(client.home.hero_line)}</h1>
       <p class="statement">${esc(person.statement)}</p>
       <div class="actions">
-        <a class="btn btn-primary" href="${r}start.html">Start a project</a>
-        <a class="btn btn-secondary" href="${r}services.html">See services</a>
+        <a class="btn btn-primary btn-lg" href="${r}start.html">Start a project</a>
+        <a class="btn btn-text" href="#featured">See the work</a>
       </div>
-      <p class="small-link">${esc(person.location)}. ${esc(person.availability)}.</p>
+      <p class="hero-meta">${esc(person.availability)}.</p>
     </div>
-    <a class="hero-media" href="${r}projects/${heroProject.id}.html">
-      <span class="video-frame">${thumbMarkup(heroProject, r, true)}</span>
-      <span class="hero-caption">${esc(heroProject.title)} — ${esc(heroProject.type)}<span class="sr">. View case study</span></span>
-    </a>
+    ${reel(r)}
+  </div>
+  <div class="wrap">
+    <ul class="strip-list" aria-label="Highlights">
+      ${site.credibility_strip.map((c) => `<li><span class="figure">${esc(c.figure)}</span><span class="fig-label">${esc(c.label)}</span></li>`).join("\n      ")}
+    </ul>
   </div>
 </section>
 
-<section class="section" id="help">
+<section class="section" id="help" aria-labelledby="help-h">
   <div class="wrap">
-    <h2>${esc(client.home.intro_heading)}</h2>
-    <p class="lede narrow-text">${esc(client.home.intro)}</p>
+    <div class="section-head">
+      <p class="eyebrow">Two kinds of work</p>
+      <h2 id="help-h">${esc(client.home.intro_heading)}</h2>
+      <p class="lede">${esc(client.home.intro)}</p>
+    </div>
     <div class="tracks">
-      ${["it", "av"].map((id) => trackCard(svc(id), r)).join("\n      ")}
+      ${TRACK_ORDER.map((id) => trackCard(svc(id), r)).join("\n      ")}
+    </div>
+    <div class="bridge">
+      <div>
+        <h3>${esc(client.home.ai_heading)}</h3>
+        <p>${esc(client.home.ai_text)}</p>
+      </div>
+      <p class="bridge-link"><a class="btn btn-secondary" href="${r}${svc("ai").path}">${esc(svc("ai").title)}</a></p>
     </div>
   </div>
 </section>
 
-<section class="section tint" id="ai">
-  <div class="wrap narrow">
-    <h2>${esc(client.home.ai_heading)}</h2>
-    <p>${esc(client.home.ai_text)}</p>
-    <p><a class="btn btn-secondary" href="${r}${svc("ai").path}">AI where they meet</a></p>
-  </div>
-</section>
-
-<section class="section" id="featured">
+<section class="section tint" id="featured" aria-labelledby="featured-h">
   <div class="wrap">
-    <h2>${esc(client.home.proof_heading)}</h2>
-    <p class="narrow-text">${esc(client.home.proof_intro)}</p>
-    <div class="grid">
-${featured.map((p) => featuredCard(p, r)).join("\n")}
+    <div class="section-head section-head-row">
+      <div>
+        <p class="eyebrow">Selected work</p>
+        <h2 id="featured-h">${esc(client.home.proof_heading)}</h2>
+        <p class="lede">${esc(client.home.proof_intro)}</p>
+      </div>
+      <p><a class="btn btn-secondary" href="${r}work.html">See all work</a></p>
     </div>
-    <p class="section-link"><a class="btn btn-secondary" href="${r}work.html">See all work</a></p>
+    <div class="grid grid-home">
+${featured.map((p, i) => featuredCard(p, r, false, i === 0)).join("\n")}
+    </div>
     <h3 class="sub-h">Additional proof</h3>
     <div class="grid grid-2">
-${proof.map((p) => proofCard(p)).join("\n")}
+${proof.map((p) => proofCard(p, r)).join("\n")}
     </div>
   </div>
 </section>
 
 ${wall(r, client.home.wall_heading, client.home.wall_intro)}
 
-<section class="strip" aria-label="Highlights">
-  <div class="wrap">
-    <ul class="strip-list">
-      ${site.credibility_strip.map((c) => `<li><span class="figure">${esc(c.figure)}</span><span class="fig-label">${esc(c.label)}</span></li>`).join("\n      ")}
-    </ul>
-  </div>
-</section>
+${howItWorks()}
 
-<section class="band" id="current" aria-labelledby="current-h">
-  <div class="wrap">
-    <h2 id="current-h">Right now</h2>
-    <ul class="plain">
-      ${site.current_practice.map((c) => `<li>${esc(c)}</li>`).join("\n      ")}
-    </ul>
-    <p class="availability">${esc(person.availability)}</p>
-  </div>
-</section>
-
-<section class="section" id="about">
+<section class="section" id="about" aria-labelledby="about-h">
   <div class="wrap about-grid">
-    <img class="headshot" src="${r}assets/images/headshot.jpg" alt="Portrait of ${esc(person.name)}" width="720" height="900" decoding="async">
+    <img class="headshot" src="${r}assets/images/headshot.jpg" alt="Portrait of ${esc(person.name)}" width="720" height="900" loading="lazy" decoding="async">
     <div>
-      <h2>About</h2>
-      <p class="lede">${esc(person.statement)}</p>
+      <p class="eyebrow">About</p>
+      <h2 id="about-h">Hello, I'm ${esc(person.name.split(" ")[0])}</h2>
       ${aboutParagraphs()}
-      <p>${esc(person.location)}. ${esc(person.availability)}.</p>
+      <div class="now">
+        <h3>Right now</h3>
+        <ul class="ticks">
+          ${site.current_practice.map((c) => `<li>${esc(c)}</li>`).join("\n          ")}
+        </ul>
+        <p class="availability">${esc(person.availability)}</p>
+      </div>
       <p><a class="btn btn-secondary" href="${r}about.html">More about Jay</a></p>
     </div>
   </div>
 </section>
 
-<section class="contact-band" id="contact">
-  <div class="wrap narrow center">
-    <h2>${esc(site.contact_cta)}</h2>
-    <div class="actions center-actions">
-      <a class="btn btn-accent" href="${r}start.html">Start a project</a>
-      <a class="btn btn-light" href="${r}resume.html">Résumés</a>
-    </div>
-  </div>
-</section>`,
+${contactBand(r)}`,
   })
 );
+
+function contactBand(r) {
+  return `<section class="contact-band" id="contact" aria-labelledby="contact-h">
+  <div class="wrap narrow center">
+    <h2 id="contact-h">${esc(site.contact_cta)}</h2>
+    <p class="contact-sub">${esc(shown(person.service_area) || person.location)}</p>
+    <div class="actions center-actions">
+      <a class="btn btn-primary btn-lg" href="${r}start.html">Start a project</a>
+      <a class="btn btn-text" href="${r}resume.html">Or download a résumé</a>
+    </div>
+  </div>
+</section>`;
+}
 
 function aboutParagraphs() {
   const ps = (site.about && site.about.paragraphs) || [];
@@ -436,6 +482,7 @@ pages.push(
       return `
 <section class="page-head">
   <div class="wrap">
+    <p class="eyebrow">Selected work</p>
     <h1>Work</h1>
     <p class="lede">Each project below says what it was, what I did and why it matters. Open a case study to watch the videos.</p>
     <div class="filter-bar" id="filter-bar" hidden>
@@ -452,7 +499,7 @@ pages.push(
     <h2 class="sr">Projects</h2>
     <div class="grid" id="work-grid">
 ${featured.map((p) => featuredCard(p, r, true)).join("\n")}
-${proof.map((p) => proofCard(p, true)).join("\n")}
+${proof.map((p) => proofCard(p, r, true)).join("\n")}
     </div>
   </div>
 </section>
@@ -477,6 +524,7 @@ featured.forEach((p, i) => {
     <p class="crumb"><a href="${r}work.html">← All work</a></p>
     <p class="eyebrow">${esc(p.type)}</p>
     <h1>${esc(p.title)}</h1>
+    <p class="head-meta"><span class="label">Role</span> ${esc(p.role)}</p>
   </div>
 </section>
 <section class="section case">
@@ -509,8 +557,9 @@ ${p.videos.map((v) => video(v, r)).join("\n")}
 </section>
 <nav class="pager" aria-label="More case studies">
   <div class="wrap pager-row">
-    <a href="${r}projects/${prev.id}.html"><span class="label">Previous</span> ${esc(prev.title)}</a>
-    <a href="${r}projects/${next.id}.html"><span class="label">Next</span> ${esc(next.title)}</a>
+    ${[["Previous", prev, "pager-prev"], ["Next", next, "pager-next"]]
+      .map(([dir, q, cls]) => `<a class="${cls}" href="${r}projects/${q.id}.html"><span class="pager-thumb video-frame">${thumbMarkup(q, r)}</span><span class="pager-text"><span class="label">${dir}</span> <span class="pager-title">${esc(q.title)}</span></span></a>`)
+      .join("\n    ")}
   </div>
 </nav>`,
     })
@@ -574,7 +623,7 @@ pages.push(
         <h2 class="h3">${esc(x.label)}</h2>
         <p>${esc(sv.tagline)}</p>
         <p><a class="btn btn-primary" href="${r}${dl(x)}">Download PDF<span class="sr">: ${esc(x.label)}</span></a></p>
-        <p class="card-link"><a href="${r}${sv.path}">About the ${esc(sv.track)} services</a></p>
+        <p class="card-link"><a class="btn btn-text" href="${r}${sv.path}">About the ${esc(sv.track)} services</a></p>
       </div></article>`;
         })
         .join("\n      ")}
@@ -628,14 +677,17 @@ const firstSteps = (q, r, id, level = "h2") => `<section class="section" id="${i
   </div>
 </section>`;
 
-const howItWorks = () => `<section class="section tint" id="how">
+function howItWorks() {
+  return `<section class="section tint" id="how">
   <div class="wrap">
+    <p class="eyebrow">The process</p>
     <h2>How it works</h2>
     <ol class="steps">
       ${client.how_it_works.map((h) => `<li><h3>${esc(h.step)}</h3><p>${esc(h.text)}</p></li>`).join("\n      ")}
     </ol>
   </div>
-</section>`;
+</section>`
+}
 
 pages.push(
   page("services.html", {
@@ -654,7 +706,7 @@ pages.push(
   <div class="wrap">
     <h2 class="sr">The two services</h2>
     <div class="tracks">
-      ${["it", "av"].map((id) => trackCard(svc(id), r)).join("\n      ")}
+      ${TRACK_ORDER.map((id) => trackCard(svc(id), r)).join("\n      ")}
     </div>
     <h2 class="sub-h">${esc(svc("ai").title)}</h2>
     <p class="narrow-text">${esc(svc("ai").tagline)} ${esc(client.home.ai_text)}</p>
@@ -662,12 +714,7 @@ pages.push(
   </div>
 </section>
 ${howItWorks()}
-<section class="contact-band">
-  <div class="wrap narrow center">
-    <h2>${esc(site.contact_cta)}</h2>
-    <p class="actions center-actions"><a class="btn btn-accent" href="${r}start.html">Start a project</a></p>
-  </div>
-</section>`,
+${contactBand(r)}`,
   })
 );
 
@@ -833,7 +880,7 @@ pages.push(
     <div class="tracks tracks-four">
       ${client.requests
         .map(
-          (q) => `<article class="track">
+          (q) => `<article class="track" data-track="${esc(q.value)}">
         <h3><a href="${r}${q.path}">${esc(st.tracks.find((t) => t.value === q.value).label)}</a></h3>
         <p>${esc(q.lede)}</p>
         <p class="card-link"><a class="btn btn-primary" href="${r}${q.path}">${esc(q.title)}</a></p>
