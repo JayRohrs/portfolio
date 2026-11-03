@@ -136,8 +136,8 @@ function head({ title, description, rootPrefix, file, noindex, ld = "" }) {
 ${noindex ? '<meta name="robots" content="noindex">\n' : ""}${url && !noindex ? `<link rel="canonical" href="${esc(url)}">\n` : ""}${og}
 <meta name="twitter:card" content="summary">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#2a1220">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e0b17">
 <link rel="icon" href="${rootPrefix}assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="${rootPrefix}assets/style.css">
 ${file === "index.html" ? jsonLd() : ldScript(ld)}</head>`;
@@ -252,7 +252,7 @@ ${body(rootPrefix)}
       <p class="footer-name">Jay Rohrs</p>
       <p>${esc(person.location)}</p>
       ${serviceArea()}
-      <p><a class="btn btn-accent" href="${rootPrefix}start.html">Start a project</a></p>
+      <p><a class="btn btn-primary" href="${rootPrefix}start.html">Start a project</a></p>
     </div>
     <nav class="footer-col" aria-label="Footer">
       <p class="footer-h">Site</p>
@@ -327,17 +327,17 @@ const ICONS = {
   it: `<svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M8 20h8M12 16v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="8.5" cy="10" r="1.4" fill="currentColor"/><circle cx="15.5" cy="10" r="1.4" fill="currentColor"/><path d="M9.9 10h4.2" stroke="currentColor" stroke-width="1.4"/></svg>`,
 };
 
-function trackCard(x, r) {
-  return `<article class="track" data-track="${esc(x.id)}">
+function trackCard(x, r, compact = false) {
+  return `<article class="track${compact ? " track-compact" : ""}" data-track="${esc(x.id)}">
   <div class="track-top">
     <span class="track-icon">${ICONS[x.id] || ""}</span>
     <p class="eyebrow">${esc(x.track)}</p>
   </div>
   <h3><a href="${r}${x.path}">${esc(x.title)}</a></h3>
   <p class="tagline">${esc(x.tagline)}</p>
-  <p class="who">${esc(x.who_for)}</p>
+  ${compact ? "" : `<p class="who">${esc(x.who_for)}</p>`}
   <ul class="ticks">
-    ${x.types.slice(0, 3).map((t) => `<li>${esc(t.name)}</li>`).join("\n    ")}
+    ${(compact ? x.types : x.types.slice(0, 3)).map((t) => `<li>${esc(t.name)}</li>`).join("\n    ")}
   </ul>
   <p class="card-link"><a class="btn btn-primary" href="${r}${x.path}">See ${esc(x.track)} services</a></p>
   <p class="card-link"><a class="btn btn-text" href="${r}${reqFor(x.request).path}">Request ${esc(x.track)} help<span class="sr"> (opens the request page)</span></a></p>
@@ -381,26 +381,27 @@ pages.push(
         <a class="btn btn-primary btn-lg" href="${r}start.html">Start a project</a>
         <a class="btn btn-text" href="#featured">See the work</a>
       </div>
+      <nav class="hero-services" aria-label="Services">
+        <p class="label">Services</p>
+        <ul>
+          ${TRACK_ORDER.map((id) => `<li><a href="${r}${svc(id).path}" data-track="${id}"><span class="track-icon">${ICONS[id]}</span>${esc(svc(id).track)}</a></li>`).join("\n          ")}
+        </ul>
+      </nav>
       <p class="hero-meta">${esc(person.availability)}.</p>
     </div>
     ${reel(r)}
-  </div>
-  <div class="wrap">
-    <ul class="strip-list" aria-label="Highlights">
-      ${site.credibility_strip.map((c) => `<li><span class="figure">${esc(c.figure)}</span><span class="fig-label">${esc(c.label)}</span></li>`).join("\n      ")}
-    </ul>
   </div>
 </section>
 
 <section class="section" id="help" aria-labelledby="help-h">
   <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">Two kinds of work</p>
+    <div class="section-head section-head-split">
+      <p class="eyebrow">Services</p>
       <h2 id="help-h">${esc(client.home.intro_heading)}</h2>
       <p class="lede">${esc(client.home.intro)}</p>
     </div>
     <div class="tracks">
-      ${TRACK_ORDER.map((id) => trackCard(svc(id), r)).join("\n      ")}
+      ${TRACK_ORDER.map((id) => trackCard(svc(id), r, true)).join("\n      ")}
     </div>
     <div class="bridge">
       <div>
@@ -409,6 +410,14 @@ pages.push(
       </div>
       <p class="bridge-link"><a class="btn btn-secondary" href="${r}${svc("ai").path}">${esc(svc("ai").title)}</a></p>
     </div>
+  </div>
+</section>
+
+<section class="strip" aria-label="Highlights">
+  <div class="wrap">
+    <ul class="strip-list">
+      ${site.credibility_strip.map((c) => `<li><span class="figure">${esc(c.figure)}</span><span class="fig-label">${esc(c.label)}</span></li>`).join("\n      ")}
+    </ul>
   </div>
 </section>
 

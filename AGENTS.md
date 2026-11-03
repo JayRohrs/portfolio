@@ -17,7 +17,7 @@ This is Jay Rohrs's public portfolio and client-intake site. It is a plain stati
 - The site never says a request was sent or received (it cannot know). `scripts/check.mjs` enforces this on every page.
 - Structured data may only use facts in `content/site.json`: no price, phone, street address, hours or ratings.
 - Keep the two tracks (IT & Systems, AV & Production) separate on every page.
-- Keep the look: near-black plum sections with blue / berry / lilac accents, serif headings, 390 px friendly, 44 px tap targets, text never shrunk to fit, contrast at least 4.5:1 (`node scripts/contrast.mjs`).
+- Keep the look: one dark theme with near-black indigo-violet backgrounds and blue / violet / lilac accents. Jay decided on 2026-11-03: no white pages and no maroon, berry or red tones (soft red stays only for form errors). Serif headings, 390 px friendly, 44 px tap targets, text never shrunk to fit, contrast at least 4.5:1 (`node scripts/contrast.mjs`).
 
 ## Useful docs
 `README.md`, `HOW_TO_UPDATE.md`, `SITE_SPEC.md`, `docs/ORDER_INTAKE.md`, `docs/LIBRARY_IMPORT.md`, `docs/CUSTOM_DOMAIN.md`, `docs/NEEDS_JAY.md`.

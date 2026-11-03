@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Measures WCAG contrast for the colour tokens in assets/style.css.
-// Tokens are read from the stylesheet itself (light :root, the
-// prefers-color-scheme: dark :root, and the fixed --od-* "on-dark" band tokens),
+// Tokens are read from the stylesheet itself (the :root tokens, a
+// prefers-color-scheme: dark block if there is one, and the --od-* "on-dark" band tokens),
 // so this check cannot drift from the real colours. Exits non-zero on any failure.
 // Text needs 4.5:1 (AA); non-text UI (borders, focus rings) needs 3:1.
 import { readFileSync } from "node:fs";
@@ -15,7 +15,8 @@ const block = (re) => {
   return Object.fromEntries([...m[1].matchAll(/--([a-z0-9-]+):\s*(#[0-9a-fA-F]{6})\b/g)].map((x) => [x[1], x[2].toLowerCase()]));
 };
 const light = block(/^:root\s*\{([\s\S]*?)\n\}/m);
-const dark = { ...light, ...block(/prefers-color-scheme:\s*dark\)\s*\{\s*:root\s*\{([\s\S]*?)\}/) };
+const hasDark = /prefers-color-scheme:\s*dark/.test(css);
+const dark = hasDark ? { ...light, ...block(/prefers-color-scheme:\s*dark\)\s*\{\s*:root\s*\{([\s\S]*?)\}/) } : null;
 
 const hex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
 const lin = (c) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
@@ -59,8 +60,9 @@ for (const bg of ["od-bg", "od-bg-deep", "od-bg-light"]) {
 }
 onDark.push(
   ["band primary button", "od-btn-text", "od-btn-bg"], ["band primary button hover", "od-btn-text", "od-btn-hover"],
-  ["footer accent button", "plum-deep", "lilac"], ["footer accent button hover", "plum-deep", "#ffffff"],
-  ["band secondary button hover", "plum-deep", "#ffffff"],
+  ["footer accent button", "ink-deep", "lilac"], ["footer accent button hover", "ink-deep", "#ffffff"],
+  ["band secondary button hover", "ink-deep", "#ffffff"], ["highlight figures on band", "av-text", "bg-alt"],
+  ["service links in hero", "od-heading", "od-bg-light"],
 );
 
 let lowest = null;
@@ -77,7 +79,7 @@ const run = (title, tokens, pairs) => {
     if (r < need) process.exitCode = 1;
   }
 };
-run("Light theme", light, themed);
-run("Dark theme (prefers-color-scheme: dark)", dark, themed);
+run(hasDark ? "Light theme" : "Page colours (one dark theme)", light, themed);
+if (dark) run("Dark theme (prefers-color-scheme: dark)", dark, themed);
 run("On-dark bands (hero, page heads, video wall, contact band, footer)", light, onDark);
 console.log(`\nLowest text pair: ${lowest[0].toFixed(2)}:1 (${lowest[1]})`);
