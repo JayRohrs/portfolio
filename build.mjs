@@ -740,10 +740,17 @@ const NEXT = st.next;
 // The one request form, used on the chooser page and on each track page.
 // `preselect` ticks that track's radio button; everything else is identical,
 // so Intake.toJSON / toText / toMailto behave the same everywhere.
+// Fallback when JavaScript is off: a plain mailto with only the questions filled in.
+// It contains no visitor data; the visitor types the answers and sends it themselves.
+const plainMailto = (track) => {
+  const label = (st.tracks.find((t) => t.value === track) || {}).label || "";
+  const body = ["Name:", "Organisation:", "Email:", `Kind of help: ${label}`, "Timeline:", "", "What I need:", ""].join("\r\n");
+  return `${mailto}?subject=${encodeURIComponent(`Project request${label ? `: ${label}` : ""}`)}&amp;body=${encodeURIComponent(body)}`;
+};
 const startForm = (preselect, r) => `<section class="section" id="request">
   <div class="wrap narrow">
     <h2>${esc(st.form_heading)}</h2>
-    <p id="no-js-note" class="notice">This form needs JavaScript to build your email. Without it, please write to <a href="${mailto}">${esc(person.email)}</a> and tell me which kind of help you need (IT &amp; Systems, AV &amp; Media Production, both, or not sure), what you need, and your timeline.</p>
+    <p id="no-js-note" class="notice">This form needs JavaScript to build your email. Without it, <a href="${plainMailto(preselect)}">open an email with the questions already listed</a>, fill in your answers, and press Send in your own email program. Or write to <a href="${mailto}">${esc(person.email)}</a> and say which kind of help you need (IT &amp; Systems, AV &amp; Media Production, both, or not sure), what you need, and your timeline.</p>
     <form id="start-form" class="form" data-to="${esc(person.email)}" novalidate hidden>
       <div id="form-errors" class="form-errors" role="alert" tabindex="-1" hidden></div>
       <div class="field">

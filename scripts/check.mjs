@@ -65,7 +65,8 @@ for (const file of htmlFiles) {
     const u = norm(m[1]);
     checks++;
     if (/^(https?:|mailto:)/.test(u)) {
-      if (!allowed.has(u) && !(SITE_URL && u.startsWith(SITE_URL))) bad(`${rel}: external link not in site.json: ${u}`);
+      const plain = u.startsWith(`mailto:${site.person.email}?subject=Project%20request`) && !/%40/.test(u.slice(u.indexOf("?")));
+      if (!allowed.has(u) && !plain && !(SITE_URL && u.startsWith(SITE_URL))) bad(`${rel}: external link not in site.json: ${u}`);
       continue;
     }
     const [path, frag] = u.split("#");
@@ -146,6 +147,7 @@ for (const file of htmlFiles) {
     ok(html.includes('class="steps"'), `${rel}: how-it-works section missing`);
     ok(req.examples.every((e) => html.includes(`<h3>${e.name.replace(/&/g, "&amp;")}</h3>`)), `${rel}: first-step examples missing`);
     ok(html.includes(`href="${site.client.start.next.path}"`), `${rel}: link to the what-next page missing`);
+    ok(/<a href="mailto:[^"]*\?subject=Project%20request[^"]*">open an email with the questions already listed/.test(html), `${rel}: no-JavaScript mailto fallback missing`);
     ok(/Open my email program/.test(html) && /Copy request text/.test(html), `${rel}: mailto and copy fallbacks missing`);
   }
   if (rel === "start.html") {
