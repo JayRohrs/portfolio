@@ -443,6 +443,8 @@ ${proof.map((p) => proofCard(p, r)).join("\n")}
 
 ${wall(r, client.home.wall_heading, client.home.wall_intro)}
 
+${buildingNow()}
+
 ${howItWorks()}
 
 <section class="section" id="about" aria-labelledby="about-h">
@@ -468,6 +470,28 @@ ${howItWorks()}
 ${contactBand(r)}`,
   })
 );
+
+// "What I'm building now": shown only when content/site.json has approved,
+// public-safe entries ({ "title", "text", "status" }). Empty list = no section.
+function buildingNow() {
+  const items = (site.building_now || []).filter((x) => x && shown(x.title) && shown(x.text));
+  if (!items.length) return "";
+  return `<section class="section" id="building" aria-labelledby="building-h">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Current work</p>
+      <h2 id="building-h">${esc(site.building_now_heading || "What I'm building now")}</h2>
+    </div>
+    <div class="grid">
+      ${items.map((x) => `<article class="card card-small"><div class="card-body">
+        ${shown(x.status) ? `<p class="eyebrow">${esc(x.status)}</p>` : ""}
+        <h3>${esc(x.title)}</h3>
+        <p class="why">${esc(x.text)}</p>
+      </div></article>`).join("\n      ")}
+    </div>
+  </div>
+</section>`;
+}
 
 function contactBand(r) {
   return `<section class="contact-band" id="contact" aria-labelledby="contact-h">
