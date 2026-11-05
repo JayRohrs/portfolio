@@ -18,6 +18,16 @@ const { person } = site;
 
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// Small corner toast on the home page only. Hidden until assets/site.js shows it
+// after a short delay (so it needs JavaScript and is simply absent without it).
+const brainPill = () => {
+  const b = site.brain_pill;
+  if (!b) return "";
+  return `<div class="brain-pill" id="brain-pill" role="status" hidden>
+  <a class="brain-pill-link" href="${esc(b.url)}" target="_blank" rel="noopener noreferrer">${esc(b.text)}<span class="visually-hidden"> (opens in a new tab)</span></a>
+  <button class="brain-pill-close" type="button" aria-label="${esc(b.dismiss_label)}"><span aria-hidden="true">&times;</span></button>
+</div>`;
+};
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const ytId = (url) => {
   const m = url.match(/(?:youtu\.be\/|\/shorts\/|[?&]v=)([A-Za-z0-9_-]{11})/);
@@ -467,7 +477,8 @@ ${howItWorks()}
   </div>
 </section>
 
-${contactBand(r)}`,
+${contactBand(r)}
+${brainPill()}`,
   })
 );
 

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const allowedHosts = new Set([
   "www.jbase.app", "www.linkedin.com", "www.youtube.com", "youtube.com",
-  "youtu.be", "www.nbcnewyork.com",
+  "youtu.be", "www.nbcnewyork.com", "brain.jbase.app",
 ]);
 const videoPath = /^(?:https:\/\/youtu\.be\/[A-Za-z0-9_-]{11}|https:\/\/(?:www\.)?youtube\.com\/(?:shorts\/[A-Za-z0-9_-]{11}|watch\?v=[A-Za-z0-9_-]{11}))$/;
 const emailPattern = /[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g;
