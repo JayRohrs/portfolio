@@ -497,7 +497,8 @@ nav[aria-label="Main"] { order: 3; width: 100%; margin: 0 calc(var(--s3) * -1); 
 .footer-h { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--eyebrow); margin: 0 0 .25rem; }
 .footer-links { list-style: none; padding: 0; margin: 0; }
 .footer-links a { display: inline-flex; align-items: center; min-height: 44px; overflow-wrap: anywhere; }
-.site-footer .btn-accent, .site-footer .btn-accent:hover { color: var(--ink-deep); }
+.site-footer .btn-accent, .site-footer .btn-accent:hover,
+.site-footer .btn-primary, .site-footer .btn-primary:hover { color: var(--ink-deep); }
 @media (min-width: 48rem) { .footer-row { grid-template-columns: 1.4fr 1fr 1fr; } }
 
 /* ---- motion: small, and only where it explains something ------------------
