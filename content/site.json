@@ -237,6 +237,8 @@
       "evidence": "Years of Microsoft 365 and business-systems support behind reliable live production."
     }
   ],
+  "building_now_heading": "What I'm building now",
+  "building_now": [],
   "current_practice": [
     "Livestream and hybrid-event production for a Denver congregation, 2025–present",
     "Community and civic video coverage, 2026"
@@ -321,7 +323,10 @@
       "proof_heading": "Work you can watch",
       "proof_intro": "Videos from the AV and media track. Open a case study to see what I did and why it mattered.",
       "wall_heading": "More to watch",
-      "wall_intro": "A wider look at videos from across the work. Each one opens on YouTube."
+      "wall_intro": "A wider look at videos from across the work. Each one opens on YouTube.",
+      "about_heading": "When the story and the technology both have to hold up",
+      "about_text": "Most projects need both: a story worth watching and technology that keeps working. If that sounds like yours, start with a short conversation.",
+      "about_link": "Tell me about your project"
     },
     "how_it_works": [
       {
