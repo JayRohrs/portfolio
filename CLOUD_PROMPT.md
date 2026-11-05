@@ -16,7 +16,7 @@ Build:
 - Look: SITE_SPEC.md colours and segmented rule; serif headings, clean sans body; readable and well balanced before compact; perfect at 390 px phone width and at desktop; 44 px tap targets; WCAG AA contrast; real headings, alt text, visible focus.
 - Videos: thumbnail first; load a youtube-nocookie embed only on click.
 - Headshot only in the About section.
-- Add a short HOW_TO_UPDATE.md: edit content/site.json → rebuild → push; and how jBase can later update that one file.
+- Add a short HOW_TO_UPDATE.md: edit content/site.json, validate, rebuild, and open a pull request; describe later proposals from a private admin system generically.
 - Enable GitHub Pages (Settings → Pages → main branch) instructions in README if you can't set it yourself.
 
 Check before finishing: build runs clean; all pages valid HTML; no broken internal links; every external link appears in site.json; Lighthouse-style check for accessibility and performance (state results honestly); screenshots at 390 px and 1366 px of Home and one case study committed under docs/screenshots/.

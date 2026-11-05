@@ -1,6 +1,8 @@
 # Putting the site on www.jbase.app (GitHub Pages + Cloudflare)
 
-Do these in order. Leave every existing DNS record (including any private subdomain) untouched.
+Status: the public domain served the portfolio on 2026-10-14. The setup steps below are historical reference; no settings change is needed for this update.
+
+These were the setup steps. Any future repair must preserve existing DNS records, including private records.
 
 ## 1. GitHub
 1. Review and merge the pull request into `main`.
@@ -19,7 +21,7 @@ Do these in order. Leave every existing DNS record (including any private subdom
 
 ## 4. Afterwards (ask Claude, or do it yourself)
 - In `content/site.json` set `"site_url": "https://www.jbase.app"`, run `node build.mjs` and `node scripts/check.mjs`, push. This switches on canonical links and `sitemap.xml`.
-- The checker currently rejects the word "jBase" on pages; that check needs relaxing for this domain. (Claude can do this when you ask.)
+- The public domain is allowed by the checker. Other site links still require review against `content/site.json`.
 
 ## Later, optional: turning the Cloudflare proxy on (orange cloud)
 If you want Cloudflare's proxy in front, first set SSL/TLS mode to **Full (strict)**, then switch the `www` record to Proxied. If you see redirect loops, the SSL mode is the usual cause. Not needed for a working site.

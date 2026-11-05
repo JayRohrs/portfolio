@@ -9,6 +9,7 @@
 import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { validateSite } from "./validate-update.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const raw = readFileSync(join(root, "content/site.json"), "utf8");
@@ -31,6 +32,7 @@ let problems = 0;
 let checks = 0;
 const bad = (m) => { problems++; console.error("PROBLEM:", m); };
 const ok = (cond, msg) => { checks++; if (!cond) bad(msg); };
+for (const problem of validateSite(site)) bad(`content/site.json: ${problem}`);
 
 const titles = new Map();
 const descs = new Map();
@@ -63,7 +65,8 @@ for (const file of htmlFiles) {
     const u = norm(m[1]);
     checks++;
     if (/^(https?:|mailto:)/.test(u)) {
-      if (!allowed.has(u) && !(SITE_URL && u.startsWith(SITE_URL))) bad(`${rel}: external link not in site.json: ${u}`);
+      const plain = u.startsWith(`mailto:${site.person.email}?subject=Project%20request`) && !/%40/.test(u.slice(u.indexOf("?")));
+      if (!allowed.has(u) && !plain && !(SITE_URL && u.startsWith(SITE_URL))) bad(`${rel}: external link not in site.json: ${u}`);
       continue;
     }
     const [path, frag] = u.split("#");
@@ -89,7 +92,8 @@ for (const file of htmlFiles) {
 
   // content rules
   ok(!/\[NEEDS JAY/i.test(html), `${rel}: placeholder text [NEEDS JAY ...] on a live page`);
-  ok(!/confidential|internal use|\bTODO\b|OCRA|jBase/i.test(html), `${rel}: internal-note marker or private name on a live page`);
+  ok(!/confidential|internal use|\bTODO\b/i.test(html), `${rel}: internal-note marker on a live page`);
+  ok(!/(?<![A-Za-z0-9.-])(?:https?:\/\/)?(?!www\.)[A-Za-z0-9-]+\.jbase\.app/i.test(html), `${rel}: non-public subdomain named on a live page`);
   ok(!/tel:|google-analytics|gtag|googletagmanager|fbq\(|plausible|matomo|hotjar/i.test(html), `${rel}: forbidden tracking/phone link`);
   const emails = (html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter((e) => !/^name@example\.com$/.test(e));
   ok(emails.every((e) => e === site.person.email), `${rel}: unapproved email address ${emails.filter((e) => e !== site.person.email)}`);
@@ -98,12 +102,62 @@ for (const file of htmlFiles) {
 
   // canonical only when SITE_URL is set
   const hasCanon = /rel="canonical"/.test(html);
-  if (rel === "404.html") ok(!hasCanon, `${rel}: 404 must not have a canonical`);
+  const noindex = /<meta name="robots" content="noindex">/.test(html);
+  if (rel === "404.html" || noindex) ok(!hasCanon, `${rel}: 404 and noindex pages must not have a canonical`);
   else ok(hasCanon === Boolean(SITE_URL), `${rel}: canonical ${hasCanon ? "present" : "missing"} but SITE_URL is ${SITE_URL ? "set" : "empty"}`);
   if (rel === "index.html") {
     const ld = (html.match(/<script type="application\/ld\+json">([^<]*)<\/script>/) || [])[1];
     ok(ld, `${rel}: missing JSON-LD`);
     if (ld) { try { JSON.parse(ld); checks++; } catch { bad(`${rel}: JSON-LD is not valid JSON`); } }
+  }
+
+  // structured data: valid JSON, and only facts that are in content/site.json
+  const lds = [...html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)].map((m) => m[1]);
+  for (const text of lds) {
+    let data;
+    try { data = JSON.parse(text.replace(/\\u003c/g, "<")); checks++; } catch { bad(`${rel}: JSON-LD is not valid JSON`); continue; }
+    const keys = new Set();
+    const strings = [];
+    (function walkLd(n) {
+      if (Array.isArray(n)) n.forEach(walkLd);
+      else if (n && typeof n === "object") for (const [k, v] of Object.entries(n)) { keys.add(k); walkLd(v); }
+      else if (typeof n === "string") strings.push(n);
+    })(data);
+    ok(!["telephone", "priceRange", "price", "openingHours", "openingHoursSpecification", "streetAddress", "aggregateRating", "review", "award"].some((k) => keys.has(k)), `${rel}: JSON-LD states a fact that is not in content/site.json (${[...keys].join(",")})`);
+    ok(strings.every((v) => !/^https?:\/\//.test(v) || v === "https://schema.org" || allowed.has(v) || (SITE_URL && v.startsWith(SITE_URL))), `${rel}: JSON-LD link not in site.json`);
+    ok(strings.every((v) => !/^[^\s@/]+@[^\s@/]+\.[^\s@/]+$/.test(v) || v === site.person.email), `${rel}: JSON-LD has an unapproved email`);
+  }
+  const wantsService = site.client.services.find((x) => x.path === rel);
+  if (wantsService) {
+    const flat = lds.join("");
+    ok(flat.includes('"@type":"Service"') && flat.includes(`"serviceType":${JSON.stringify(wantsService.track)}`), `${rel}: service page needs Service structured data`);
+    ok(wantsService.types.every((t) => flat.includes(JSON.stringify(t.name))), `${rel}: structured data must list the same service types as the page`);
+    ok(/<h2[^>]*>What a small first step can look like<\/h2>/.test(html) || wantsService.id === "ai", `${rel}: service page needs its first-step examples`);
+  }
+
+  // the site cannot know whether an email was sent, so no page may say so
+  ok(!/(?<!nothing )(?<!not )(?:has|have|was|were) been sent\b|\b(?:message|request|email) sent\b|successfully sent|thank you for (?:your )?(?:request|message)|we(?:'ve| have)? received your/i.test(html), `${rel}: page claims a request was sent or received`);
+
+  // request pages: one per track, same form, track pre-selected, link to the "what next" page
+  const req = site.client.requests.find((q) => q.path === rel);
+  if (req) {
+    ok(/<form id="start-form"[^>]*data-to="/.test(html), `${rel}: request form missing`);
+    ok(new RegExp(`name="track" value="${req.value}" checked`).test(html), `${rel}: ${req.value} track not pre-selected`);
+    ok((html.match(/\schecked[\s>]/g) || []).length === 1, `${rel}: exactly one track must be pre-selected`);
+    ok(html.includes('class="steps"'), `${rel}: how-it-works section missing`);
+    ok(req.examples.every((e) => html.includes(`<h3>${e.name.replace(/&/g, "&amp;")}</h3>`)), `${rel}: first-step examples missing`);
+    ok(html.includes(`href="${site.client.start.next.path}"`), `${rel}: link to the what-next page missing`);
+    ok(/<a href="mailto:[^"]*\?subject=Project%20request[^"]*">open an email with the questions already listed/.test(html), `${rel}: no-JavaScript mailto fallback missing`);
+    ok(/Open my email program/.test(html) && /Copy request text/.test(html), `${rel}: mailto and copy fallbacks missing`);
+  }
+  if (rel === "start.html") {
+    ok(site.client.requests.every((q) => html.includes(`href="${q.path}"`)), `${rel}: chooser must link every request page`);
+    ok((html.match(/\schecked[\s>]/g) || []).length === 0, `${rel}: no track should be pre-selected on the chooser`);
+  }
+  if (rel === site.client.start.next.path) {
+    ok(noindex, `${rel}: confirmation page must be noindex`);
+    ok(html.includes("cannot tell") || html.includes("cannot see"), `${rel}: confirmation page must say it cannot know`);
+    ok(!/<form/.test(html), `${rel}: confirmation page must not contain a form`);
   }
 }
 
@@ -114,6 +168,13 @@ ok(existsSync(join(root, "assets/favicon.svg")), "favicon missing");
 ok(htmlFiles.every((f) => /rel="icon" href="[^"]*assets\/favicon\.svg"/.test(readFileSync(f, "utf8"))), "a page does not link the favicon");
 ok(existsSync(join(root, "sitemap.xml")) === Boolean(SITE_URL), `sitemap.xml ${SITE_URL ? "missing" : "present"} but SITE_URL is ${SITE_URL ? "set" : "empty"}`);
 if (SITE_URL) ok(/Sitemap:/.test(readFileSync(join(root, "robots.txt"), "utf8")), "robots.txt lacks Sitemap line");
+if (SITE_URL && existsSync(join(root, "sitemap.xml"))) {
+  const locs = [...readFileSync(join(root, "sitemap.xml"), "utf8").matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const expected = htmlFiles.map((f) => f.slice(root.length + 1)).filter((rel) => rel !== "404.html" && !/content="noindex"/.test(readFileSync(join(root, rel), "utf8")));
+  ok(expected.every((rel) => locs.includes(`${SITE_URL}/${rel === "index.html" ? "" : rel}`)), "sitemap.xml is missing an indexable page");
+  ok(locs.length === expected.length, "sitemap.xml lists a page that should not be indexed");
+  ok(locs.every((u) => u.startsWith(SITE_URL + "/")), "sitemap.xml has a URL outside the public address");
+}
 
 // the intake form -> mailto
 await import("../assets/intake.js");

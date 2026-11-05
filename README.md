@@ -7,12 +7,12 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 ## Files
 - content/site.json — every word, link and project on the site. Only Verified/Confirmed public links. Items marked NEEDS_JAY wait for his answer.
 - SITE_SPEC.md — the design brief for the builder (from INFORMATION_ARCHITECTURE.md and the AV resume look Jay picked).
-- downloads/ — at upload time: the current public resumes from resumes/public-downloads (now AV V6.0 and IT V4.8.1, public-safe) and the master headshot (Jay adds it himself).
+- downloads/ — current approved public PDFs: AV V6.1 and IT V4.9. Private masters and their supporting records stay outside this repository.
 
 ## Rules
-- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client, church-governance or OCRA material; drone credential claims.
+- Never: the First Unitarian memorial livestream; unverified outlet names; phone number; private career, client or church-governance material; drone credential claims.
 - Readable and well balanced beats compact (Jay's rule for every document).
-- jBase may later update content/site.json through a portfolio manager, always with Jay's approval before publishing.
+- A private admin system may later propose public content updates through a pull request, always with Jay's approval before publishing. See `docs/UPDATE_CONTRACT.md`.
 
 ## Building and publishing
 - `node build.mjs` regenerates every page from `content/site.json` (Node 18+, no installs). `node scripts/check.mjs` checks links.
@@ -22,6 +22,7 @@ This folder is public-only (INFORMATION_ARCHITECTURE.md: "Keep site/ public-only
 
 ## Client site additions
 - Menu: Services · Work · About · Résumés · Start a project. IT & Systems and AV & Production are separate services pages, with a short "AI where they meet" page.
-- `start.html` is a static request form that opens the visitor's own email program (no backend). See `docs/ORDER_INTAKE.md`.
+- `start.html` chooses a request type; `start-it.html`, `start-av.html`, `start-both.html` and `start-not-sure.html` each give examples of a small first step and the request form (opens the visitor's own email program, no backend). `start-next.html` is an honest "what to expect" page. See `docs/ORDER_INTAKE.md`.
+- Services pages carry a `Service` structured-data block built only from `content/site.json`; `sitemap.xml` lists every indexable page.
 - `node scripts/check.mjs` checks every page (titles, headings, links, placeholders, emails, the form's mailto). `node scripts/contrast.mjs` prints measured colour contrast.
 - Open questions for Jay: `docs/NEEDS_JAY.md`.

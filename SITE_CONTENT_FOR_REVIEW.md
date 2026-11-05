@@ -87,5 +87,5 @@ Approved by Jay on 2026-10-12. Hidden items show *(hidden until…)*.
 - Gothamist, Gawker or CBS for Wall Street Pillow Fight (unverified; NBC New York is confirmed)
 - Drone and Hawaii clips (no links yet; family permission needed for the swimmer shot)
 - Phone number (contact by email/LinkedIn only on the public site)
-- Private career, client, church-governance and OCRA material
+- Private career, client, church-governance and other private material
 
