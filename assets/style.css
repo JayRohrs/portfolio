@@ -518,7 +518,32 @@ nav[aria-label="Main"] { order: 3; width: 100%; margin: 0 calc(var(--s3) * -1); 
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
 
+/* ---- brain pill: small dismissible corner toast on the home page ----------
+   Shown by assets/site.js after a short delay and removed again after a few
+   minutes. Resting = dark indigo with a lilac edge; hover/focus = filled lilac;
+   press = filled violet. Sits above the phone safe area, never full width. */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.brain-pill { position: fixed; z-index: 50; right: max(var(--gutter), env(safe-area-inset-right)); bottom: max(var(--gutter), env(safe-area-inset-bottom)); max-width: calc(100vw - 2 * var(--gutter)); display: flex; align-items: stretch; min-height: 44px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--lilac); box-shadow: var(--shadow-lift); color: var(--heading); }
+.brain-pill[hidden] { display: none; }
+.brain-pill:hover, .brain-pill:focus-within { background: var(--lilac); border-color: var(--lilac); }
+.brain-pill:active { background: var(--violet); border-color: var(--violet); }
+.brain-pill-link { display: inline-flex; align-items: center; min-height: 44px; padding: .5rem .25rem .5rem 1.15rem; border-radius: 999px 0 0 999px; color: inherit; font-weight: 700; font-size: 1.02rem; line-height: 1.25; text-decoration: none; }
+.brain-pill:hover .brain-pill-link, .brain-pill:focus-within .brain-pill-link, .brain-pill:hover .brain-pill-close, .brain-pill:focus-within .brain-pill-close { color: var(--ink-deep); }
+.brain-pill-close { flex: none; width: 44px; min-height: 44px; border: 0; border-radius: 0 999px 999px 0; background: transparent; color: var(--muted); font: inherit; font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.brain-pill-close:hover { background: rgba(14, 11, 23, .18); color: var(--ink-deep); }
+.brain-pill-link:focus-visible, .brain-pill-close:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 999px; }
+.brain-pill:focus-within { box-shadow: 0 0 0 2px var(--bg), var(--shadow-lift); }
+/* keep the last lines of the footer clear of the pill while it is on screen */
+.has-brain-pill .site-footer { padding-bottom: 5rem; }
+@media (prefers-reduced-motion: no-preference) {
+  /* the one animation: it slides up from the corner to say "something new arrived" */
+  .brain-pill:not([hidden]) { animation: brain-pill-in .35s var(--ease) both; }
+  .brain-pill { transition: background-color .18s var(--ease), border-color .18s var(--ease); }
+  @keyframes brain-pill-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+}
+
 @media print {
+  .brain-pill { display: none; }
   .site-header, .site-footer, .filter-bar, .wall { display: none; }
   .hero, .page-head, .contact-band { background: none; color: #000; }
 }

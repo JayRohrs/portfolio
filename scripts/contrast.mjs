@@ -44,6 +44,8 @@ const themed = [
   ["form field text", "text", "field-bg"], ["form error text on card", "err", "surface"],
   ["error summary text", "err-strong", "err-bg"], ["video-count badge", "badge-text", "badge-bg"],
   ["form field border", "field-border", "field-bg", "ui"], ["form field border on card", "field-border", "surface", "ui"],
+  ["brain pill", "heading", "surface-2"], ["brain pill hover", "ink-deep", "lilac"], ["brain pill pressed", "ink-deep", "violet"],
+  ["brain pill close icon", "muted", "surface-2"], ["brain pill edge on page", "lilac", "bg", "ui"],
   ["focus ring on page", "focus", "bg", "ui"], ["focus ring on card", "focus", "surface", "ui"],
   ["focus ring on tinted section", "focus", "bg-alt", "ui"],
 ];

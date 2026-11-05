@@ -23,6 +23,24 @@
     frame.focus();
   });
 
+  // Home page: "Looking for brain.jbase.app?" corner pill. Appears shortly after load,
+  // goes away by itself after PILL_VISIBLE_MS, and can be dismissed. Nothing is stored.
+  var PILL_DELAY_MS = 1500;
+  var PILL_VISIBLE_MS = 3 * 60 * 1000; // about 3 minutes
+  var pill = document.getElementById("brain-pill");
+  if (pill) {
+    var hidePill = function () {
+      pill.hidden = true;
+      document.documentElement.classList.remove("has-brain-pill");
+    };
+    setTimeout(function () {
+      pill.hidden = false;
+      document.documentElement.classList.add("has-brain-pill");
+      setTimeout(hidePill, PILL_VISIBLE_MS);
+    }, PILL_DELAY_MS);
+    pill.querySelector(".brain-pill-close").addEventListener("click", hidePill);
+  }
+
   // Work page: filter bar. Without JS the bar stays hidden and every project is listed.
   var bar = document.getElementById("filter-bar");
   var grid = document.getElementById("work-grid");

@@ -312,6 +312,11 @@
       }
     ]
   },
+  "brain_pill": {
+    "text": "Looking for brain.jbase.app?",
+    "url": "https://brain.jbase.app",
+    "dismiss_label": "Dismiss this message"
+  },
   "site_url": "https://www.jbase.app",
   "client": {
     "home": {

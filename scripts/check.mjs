@@ -17,6 +17,7 @@ const site = JSON.parse(raw);
 const SITE_URL = (process.env.SITE_URL ?? site.site_url ?? "").trim().replace(/\/+$/, "");
 const allowed = new Set(raw.match(/https?:\/\/[^\s"')]+/g) || []);
 allowed.add(`mailto:${site.person.email}`);
+const brainHost = site.brain_pill && new URL(site.brain_pill.url).hostname;
 const norm = (u) => u.replace(/&amp;/g, "&");
 
 const htmlFiles = [];
@@ -93,7 +94,9 @@ for (const file of htmlFiles) {
   // content rules
   ok(!/\[NEEDS JAY/i.test(html), `${rel}: placeholder text [NEEDS JAY ...] on a live page`);
   ok(!/confidential|internal use|\bTODO\b/i.test(html), `${rel}: internal-note marker on a live page`);
-  ok(!/(?<![A-Za-z0-9.-])(?:https?:\/\/)?(?!www\.)[A-Za-z0-9-]+\.jbase\.app/i.test(html), `${rel}: non-public subdomain named on a live page`);
+  // the one subdomain Jay approved for the home-page pill (brain_pill in content/site.json) is exempt
+  const noPill = brainHost ? html.split(brainHost).join("") : html;
+  ok(!/(?<![A-Za-z0-9.-])(?:https?:\/\/)?(?!www\.)[A-Za-z0-9-]+\.jbase\.app/i.test(noPill), `${rel}: non-public subdomain named on a live page`);
   ok(!/tel:|google-analytics|gtag|googletagmanager|fbq\(|plausible|matomo|hotjar/i.test(html), `${rel}: forbidden tracking/phone link`);
   const emails = (html.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g) || []).filter((e) => !/^name@example\.com$/.test(e));
   ok(emails.every((e) => e === site.person.email), `${rel}: unapproved email address ${emails.filter((e) => e !== site.person.email)}`);
